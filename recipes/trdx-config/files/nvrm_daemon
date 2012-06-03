@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Start or stop the Nvidia Ressource Manager Daemon.
+#
+# Based on debian apmd scripts
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+[ -f /etc/default/rcS ] && . /etc/default/rcS
+
+case "$1" in
+    start)
+	echo -n "Nvidia Ressource Manager Daemon: "
+	start-stop-daemon -S -x /bin/nvrm_daemon -- --daemon &
+	if [ $? = 0 ]; then
+	    echo "nvrm_daemon."
+	else
+	    echo "(failed.)"
+	fi
+	;;
+    stop)
+	echo -n "Nvidia Ressource Manager Daemon: "
+	start-stop-daemon -K -x /bin/nvrm_daemon
+	echo "nvrm_daemon."
+	;;
+    restart|force-reload) 
+	$0 stop
+	$0 start
+	exit
+	;;
+    *)
+	echo "Usage: /etc/init.d/nvrm_daemon {start|stop|restart|force-reload}"
+	exit 1
+	;;
+esac
+
+exit 0

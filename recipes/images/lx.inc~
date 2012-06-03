@@ -1,0 +1,39 @@
+IMAGE_INSTALL += " \
+	task-lxde-extended \
+	\
+	xinput-calibrator \
+	\
+	lxde-common \
+	openbox \
+	openbox-theme-clearlooks \
+	openbox-theme-onyx \
+	lxde-icon-theme \
+	hicolor-icon-theme \
+	lxdm \
+	lxsession \
+	lxmenu-data \
+	menu-cache \
+	lxappearance \
+	obconf \
+	lxpanel \
+	\
+	lxtask \
+	lxpolkit \
+	lxsession-edit \
+	\
+	lxshortcut \
+	lxlauncher \
+	pcmanfm \
+	leafpad \
+	gpicview \
+	lxterminal \
+	lxinput \
+"
+#	angstrom-task-lxde \
+#	task-lxde-xserver \
+#	task-lxde-xserver-base \
+#	xkbd \
+#	xcursor-themes \
+#	lxappearance-obconf \
+#	lxrandr \
+#	policykit-gnome \
