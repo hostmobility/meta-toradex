@@ -16,6 +16,7 @@ IMAGE_PREPROCESS_COMMAND = "rootfs_update_timestamp"
 # xorg-minimal-fonts xserver-xorg-multimedia-modules xerver-xorg-utils xrandr 
 
 IMAGE_SPLASH = "psplash-angstrom"
+PREFERRED_PROVIDER_psplash-support = "psplash-angstrom"
 
 DISTRO_UPDATE_ALTERNATIVES ??= ""
 ROOTFS_PKGMANAGE_PKGS ?= '${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${ROOTFS_PKGMANAGE} ${DISTRO_UPDATE_ALTERNATIVES}", d)}'
@@ -48,6 +49,7 @@ IMAGE_INSTALL += " \
 	task-basic \
 	${CONMANPKGS} \
 	${ROOTFS_PKGMANAGE_PKGS} \
+	timestamp-service \
 	task-base-extended \
 	${IMAGE_SPLASH} \
 	${XSERVER} \
@@ -93,8 +95,8 @@ include lx.inc
 include trdx-extra.inc
 
 IMAGE_DEV_MANAGER   = "udev"
-IMAGE_INIT_MANAGER  = "sysvinit sysvinit-pidof"
-IMAGE_INITSCRIPTS   = "initscripts"
+IMAGE_INIT_MANAGER  = "systemd"
+IMAGE_INITSCRIPTS   = " "
 IMAGE_LOGIN_MANAGER = "tinylogin shadow"
 
 export IMAGE_BASENAME = "LXDE-image"
