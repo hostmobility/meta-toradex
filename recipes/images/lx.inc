@@ -30,10 +30,10 @@ IMAGE_INSTALL += " \
 	lxterminal \
 	lxinput \
 "
-#	angstrom-task-lxde \
-#	task-lxde-xserver \
-#	task-lxde-xserver-base \
-#	lxappearance-obconf \
-#	xkbd \
-#	xcursor-themes \
-#	policykit-gnome \
+#	angstrom-task-lxde 
+#	task-lxde-xserver 
+#	task-lxde-xserver-base 
+#	lxappearance-obconf 
+#	xkbd 
+#	xcursor-themes 
+#	policykit-gnome 

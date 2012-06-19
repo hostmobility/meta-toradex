@@ -1,22 +1,16 @@
 #additional packages to include in our Toradex images
 
-#the following builds cross gdb
+#the following builds cross gdb and gdbserver
 DEPENDS += "gdb-cross"
 
-#the gdb recipe provides gdbserver
-DEPENDS += "gdb"
+IMAGE_INSTALL_MACHINE_colibri-t20 = "trdx-odm"
 
-IMAGE_INSTALL_MACHINE_colibri-t20 += " \
-	trdx-odm \
-"
-IMAGE_INSTALL_MACHINE += " \
-"
+IMAGE_INSTALL_MACHINE = ""
 
-IMAGE-INSTALL += " \
+IMAGE_INSTALL += " \
 	alsa-utils \
 	alsa-utils-aplay \
 	alsa-utils-amixer \
-	\
 	\
 	aspell \
 	consolekit \
@@ -37,6 +31,8 @@ IMAGE-INSTALL += " \
 	mtd-utils \
 	update-modules \
 	\
+	gpioconfig \
+	tegrastats \
 	hdparm \
 	iperf \
 	memtester \
@@ -50,7 +46,5 @@ IMAGE-INSTALL += " \
 	\
 	trdx-oak-sensors \
 "
-#	tegrastats \
-#	gpioconfig \
-#	openssl-conf \
-#	ntpclient \
+#	openssl-conf 
+#	ntpclient 
