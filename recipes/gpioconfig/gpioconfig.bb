@@ -1,6 +1,6 @@
 DESCRIPTION = "GPIOConfig tool for Colibri T20"
 SECTION = "base"
-LICENSE = "propriatry"
+LICENSE = "CLOSED"
 PR = "r3"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -8,11 +8,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 DEPENDS = "gtk+"
 RDEPENDS = "gtk+"
 
-S = "${WORKDIR}/target-utils/GPIOConfig"
-
-SVN_REV = "190"
-SRC_URI = "svn://tegradev:tegra123!@mammut.toradex.int:8090/colibri_tegra_linux/trunk;module=target-utils/GPIOConfig;rev=${SVN_REV};proto=http"
-#SRC_URI += "file://Makefile"
+SRC_URI =  "file://GPIOConfig"
 SRC_URI += "file://GPIOConfig.desktop"
 SRC_URI += "file://GPIOConfig.png"
 
@@ -26,9 +22,9 @@ do_install() {
         install -d ${D}/${bindir}
 	install -d ${D}/${datadir}/applications
 	install -d ${D}/${datadir}/pixmaps
-        install ${S}/GPIOConfig ${D}/${bindir}
-	install ${WORKDIR}/GPIOConfig.desktop ${D}/${datadir}/applications
-        install ${WORKDIR}/GPIOConfig.png ${D}/${datadir}/pixmaps/GPIOConfig.png
+        install -m 755 ${WORKDIR}/GPIOConfig ${D}/${bindir}
+	install -m 644 ${WORKDIR}/GPIOConfig.desktop ${D}/${datadir}/applications
+        install -m 644 ${WORKDIR}/GPIOConfig.png ${D}/${datadir}/pixmaps/GPIOConfig.png
 }
 
 pkg_postinst_${PN}() {
