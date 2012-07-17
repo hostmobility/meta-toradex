@@ -1,0 +1,8 @@
+--- lxde-common-0.5.5/autostart.orig	2011-07-29 16:04:03.000000000 +0200
++++ lxde-common-0.5.5/autostart	2012-03-12 16:41:00.000000000 +0100
+@@ -1,3 +1,5 @@
+ @lxpanel --profile LXDE
+ @pcmanfm --desktop --profile LXDE
+ @xscreensaver -no-splash
++xrandr 2>&1 > /dev/null
++hdmiaudio.sh

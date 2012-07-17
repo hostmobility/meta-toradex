@@ -1,0 +1,12 @@
+diff -urNdb lxde-common-0.5.5.orig//startlxde.in lxde-common-0.5.5//startlxde.in
+--- lxde-common-0.5.5.orig//startlxde.in	2011-12-17 22:39:41.000000000 +0100
++++ lxde-common-0.5.5//startlxde.in	2011-12-17 22:40:22.000000000 +0100
+@@ -8,7 +8,7 @@
+ PCMANFM_CONF_DIR="$XDG_CONFIG_HOME/pcmanfm/LXDE"
+ if [ ! -f "$PCMANFM_CONF_DIR/pcmanfm.conf" ]; then
+ 	mkdir -p "$PCMANFM_CONF_DIR"
+-	cp @prefix@/share/lxde/pcmanfm/pcmanfm.conf "$PCMANFM_CONF_DIR/pcmanfm.conf"
++	cp /etc/xdg/pcmanfm/LXDE/pcmanfm.conf "$PCMANFM_CONF_DIR/pcmanfm.conf"
+ fi
+ 
+ # Ensure the existance of openbox config file
