@@ -9,14 +9,14 @@ PR = "r1"
 #create the file /etc/timestamp
 IMAGE_PREPROCESS_COMMAND = "rootfs_update_timestamp"
 
-IMAGE_LINGUAS = ""
-#IMAGE_LINGUAS = "en-us"
+#IMAGE_LINGUAS = ""
+IMAGE_LINGUAS = "en-us"
 #IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es kn-in ml-in ta-in"
 #ROOTFS_POSTPROCESS_COMMAND += 'install_linguas; '
-IMAGE_FEATURES += "package-management ssh-server-dropbear"
+#IMAGE_FEATURES += "package-management ssh-server-dropbear"
 
 #MAYBE WE WILL NEED THESE ALSO:
-# xorg-minimal-fonts xserver-xorg-multimedia-modules xerver-xorg-utils
+# xorg-minimal-fonts xserver-xorg-multimedia-modules xserver-xorg-utils
 
 IMAGE_SPLASH = "psplash-angstrom"
 PREFERRED_PROVIDER_psplash-support = "psplash-angstrom"
@@ -25,7 +25,8 @@ PREFERRED_PROVIDER_virtual/psplash = "psplash-angstrom"
 DISTRO_UPDATE_ALTERNATIVES ??= ""
 ROOTFS_PKGMANAGE_PKGS ?= '${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${ROOTFS_PKGMANAGE} ${DISTRO_UPDATE_ALTERNATIVES}", d)}'
 
-CONMANPKGS ?= "connman connman-plugin-loopback connman-plugin-ethernet connman-plugin-wifi connman-systemd connman-gnome"
+CONMANPKGS = ""
+#CONMANPKGS ?= "connman connman-plugin-loopback connman-plugin-ethernet connman-plugin-wifi connman-systemd connman-gnome"
 CONMANPKGS_libc-uclibc = ""
 
 DEPENDS += "gst-plugins-good gst-plugins-bad gst-plugins-ugly"
@@ -42,19 +43,48 @@ DEPENDS += "gst-plugins-good gst-plugins-bad gst-plugins-ugly"
 # needed by nvidia commandline player \
 #  libpcre \
 
+# these were in the oe classic image
+IMAGE_INSTALL_CLASSIC = " \
+gconf \
+gnome-vfs \
+gnome-vfs-plugin-file \
+gvfs \
+gvfsd-trash \
+xdg-utils \
+xvinfo \
+\
+file \
+initscripts \
+libgsf \
+polkit-gnome \
+libwnck \
+libxres \
+makedevs \
+mime-support \
+sysvinit \
+xcursor-transparent-theme \
+zeroconf \
+"
+
 IMAGE_INSTALL += " \
+	${IMAGE_INSTALL_CLASSIC} \
 	angstrom-task-boot \
 	task-basic \
 	${CONMANPKGS} \
 	${ROOTFS_PKGMANAGE_PKGS} \
 	timestamp-service \
 	task-base-extended \
-	task-x11-server\
-	task-x11-utils \
+	${XSERVER}\
+	xserver-common \
+	xauth \
+	xhost \
+	xset \
 	\
 	${IMAGE_SPLASH} \
 	${XSERVER} \
 	xrandr \
+	xrdb \
+	xorg-minimal-fonts xserver-xorg-multimedia-modules xserver-xorg-utils \
 	\
 	libxdamage libxvmc libxinerama \
 	libxcursor \
