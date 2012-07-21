@@ -3,7 +3,7 @@
 #the following builds cross gdb and gdbserver
 DEPENDS += "gdb-cross"
 
-IMAGE_INSTALL_MACHINE_colibri-t20 = "trdx-odm"
+#IMAGE_INSTALL_MACHINE_colibri-t20 = "trdx-odm"
 
 IMAGE_INSTALL_MACHINE = ""
 
@@ -27,14 +27,17 @@ IMAGE_INSTALL += " \
 	gdbserver \
 	grep \
 	joe \
+	minicom \
 	ldd \
 	mtd-utils \
 	update-modules \
 	\
 	gpioconfig \
 	tegrastats \
+	devmem2 \
 	hdparm \
 	iperf \
+	i2c-tools \
 	memtester \
 	stress \
 	lmbench \
