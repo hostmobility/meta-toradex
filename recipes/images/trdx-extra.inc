@@ -29,6 +29,7 @@ IMAGE_INSTALL += " \
 	joe \
 	minicom \
 	ldd \
+	lsof \
 	mtd-utils \
 	update-modules \
 	\

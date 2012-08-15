@@ -1,10 +1,9 @@
-PRINC = "1"
+PRINC = "2"
 WALLPAPER-MACHINE = "toradex-neutral.png"
 WALLPAPER-MACHINE_colibri-t20 = "toradex-t20.png"
 WALLPAPER-MACHINE_colibri-t30 = "toradex-t30.png"
 
-THISDIR := "${@os.path.dirname(bb.data.getVar('FILE', d, True))}"
-FILESPATH =. "${@base_set_filespath(["${THISDIR}/${PN}-${PV}"], d)}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
 SRC_URI += " \
 	file://autostart.patch \
@@ -15,6 +14,7 @@ SRC_URI += " \
 	file://desktop.conf \
 	file://defaults.list \
 	file://hdmiaudio.sh \
+	file://panel-buttons.patch \
 "
 
 do_install_append () {

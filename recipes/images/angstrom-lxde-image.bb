@@ -4,7 +4,11 @@ DESCRIPTION = "Image based on the LXDE desktop"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=3f40d7994397109285ec7b81fdeb3b58"
 
-PR = "r1"
+PV = "V2.0"
+PR = "r3"
+
+#create the deployment directory-tree
+require trdx-image-fstype.inc
 
 #create the file /etc/timestamp
 IMAGE_PREPROCESS_COMMAND = "rootfs_update_timestamp"
@@ -18,18 +22,18 @@ IMAGE_LINGUAS = "en-us"
 #MAYBE WE WILL NEED THESE ALSO:
 # xorg-minimal-fonts xserver-xorg-multimedia-modules xserver-xorg-utils
 
-IMAGE_SPLASH = "psplash-angstrom"
-PREFERRED_PROVIDER_psplash-support = "psplash-angstrom"
-PREFERRED_PROVIDER_virtual/psplash = "psplash-angstrom"
-
 DISTRO_UPDATE_ALTERNATIVES ??= ""
 ROOTFS_PKGMANAGE_PKGS ?= '${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${ROOTFS_PKGMANAGE} ${DISTRO_UPDATE_ALTERNATIVES}", d)}'
 
-CONMANPKGS = ""
-#CONMANPKGS ?= "connman connman-plugin-loopback connman-plugin-ethernet connman-plugin-wifi connman-systemd connman-gnome"
+#CONMANPKGS = ""
+CONMANPKGS ?= "connman connman-plugin-loopback connman-plugin-ethernet connman-plugin-wifi connman-systemd connman-gnome"
 CONMANPKGS_libc-uclibc = ""
 
 DEPENDS += "gst-plugins-good gst-plugins-bad gst-plugins-ugly"
+
+#deploy the OpenGL ES headers to the sysroot
+DEPENDS += "nvsamples"
+
 
 # Additional X libs not pulled in by any package \
 #  xtrans libxevie \
@@ -68,8 +72,10 @@ zeroconf \
 
 IMAGE_INSTALL += " \
 	${IMAGE_INSTALL_CLASSIC} \
+	virtual-psplash \
 	angstrom-task-boot \
 	task-basic \
+	udev-extra-rules \
 	${CONMANPKGS} \
 	${ROOTFS_PKGMANAGE_PKGS} \
 	timestamp-service \
@@ -86,7 +92,6 @@ IMAGE_INSTALL += " \
 	xhost \
 	xset \
 	\
-	${IMAGE_SPLASH} \
 	${XSERVER} \
 	xrandr \
 	xrdb \
@@ -113,6 +118,7 @@ IMAGE_INSTALL += " \
 	gst-plugins-base-theora \
 	gst-plugins-base-videotestsrc \
 	gst-plugins-base-vorbis \
+	gst-plugins-good-isomp4 \
 	gst-plugins-good-matroska \
 	gst-plugins-good-rtp \
 	gst-plugins-good-udp \
@@ -121,12 +127,15 @@ IMAGE_INSTALL += " \
 	gst-plugins-good-wavparse \
 	gst-plugins-ugly-asf \
 	libpcre \
+	libpcreposix \
 	libxcomposite \
-	firefox \
-	flash-plugins \
+	alsa-states \
 "
 
-#	gst-plugin-qtdemux 
+# firefox at the moment segfaults
+#	firefox \
+#	flash-plugins \
+
 #	gst-plugin-mpegdemux 
 
 require lx.inc

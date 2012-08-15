@@ -1,6 +1,6 @@
 diff -ur lxdm-0.4.1/data.orig//lxdm.conf lxdm-0.4.1/data/lxdm.conf
 --- lxdm-0.4.1/data.orig//lxdm.conf	2011-07-29 15:44:51.000000000 +0200
-+++ lxdm-0.4.1/data/lxdm.conf	2011-12-31 12:22:46.000000000 +0100
++++ lxdm-0.4.1/data/lxdm.conf	2012-07-25 17:50:13.101251148 +0200
 @@ -1,6 +1,6 @@
  [base]
  ## uncomment and set autologin username to enable autologin
@@ -9,6 +9,35 @@ diff -ur lxdm-0.4.1/data.orig//lxdm.conf lxdm-0.4.1/data/lxdm.conf
  
  ## uncomment and set timeout to enable timeout autologin,
  ## the value should >=5
+@@ -16,7 +16,7 @@
+ # xauth_path=/tmp
+ 
+ ## greeter used to welcome the user
+-greeter=/usr/local/libexec/lxdm-greeter-gtk
++greeter=/usr/libexec/lxdm-greeter-gtk
+ 
+ [server]
+ ## arg used to start xserver, not fully function
+diff -Naur --exclude temp lxdm-0.4.1-r3.orig/lxdm-0.4.1/data/lxdm.conf.in lxdm-0.4.1-r3/lxdm-0.4.1/data/lxdm.conf.in
+--- lxdm-0.4.1/data/lxdm.conf.in	2012-07-25 10:47:22.681189278 +0200
++++ lxdm-0.4.1/data/lxdm.conf.in	2012-07-25 17:49:49.861217834 +0200
+@@ -1,6 +1,6 @@
+ [base]
+ ## uncomment and set autologin username to enable autologin
+-# autologin=dgod
++autologin=root
+ 
+ ## uncomment and set timeout to enable timeout autologin,
+ ## the value should >=5
+@@ -16,7 +16,7 @@
+ # xauth_path=/tmp
+ 
+ ## greeter used to welcome the user
+-greeter=@FULL_LIBEXECDIR@/lxdm-greeter-gtk
++greeter=/usr/libexec/lxdm-greeter-gtk
+ 
+ [server]
+ ## arg used to start xserver, not fully function
 diff -ur lxdm-0.4.1/data.orig//PostLogout.in lxdm-0.4.1/data/PostLogout.in
 --- lxdm-0.4.1/data.orig//PostLogout.in	2011-07-29 15:42:33.000000000 +0200
 +++ lxdm-0.4.1/data/PostLogout.in	2011-12-31 12:21:41.000000000 +0100
