@@ -7,6 +7,11 @@ SRC_URI += " \
 	file://configfiles.patch \
 	file://fix_event_check_bug_caused_cpu_100.patch \
 "
+
+#issues during V2.0alpha development, might be removed later
+INITSCRIPT_PARAMS_colibri-t20  = "start 98 5 2 . stop 20 0 1 6 ."
+
+
 pkg_postinst_${PN}() {
   # Register up as default dm
   mkdir -p ${sysconfdir}/X11/
