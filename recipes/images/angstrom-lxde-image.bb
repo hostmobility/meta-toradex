@@ -34,6 +34,8 @@ DEPENDS += "gst-plugins-good gst-plugins-bad gst-plugins-ugly"
 #deploy the OpenGL ES headers to the sysroot
 DEPENDS += "nvsamples"
 
+#build some ipk which are needed together with CAN, but do not yet install them
+DEPENDS += "canutils libsocketcan iproute2"
 
 # Additional X libs not pulled in by any package \
 #  xtrans libxevie \
