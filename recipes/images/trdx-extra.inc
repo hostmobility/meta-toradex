@@ -46,6 +46,8 @@ IMAGE_INSTALL += " \
 	nbench-byte \
 	\
 	trdx-nv-binaries \
+	trdx-nv-binaries-nv-gstapps \
+	trdx-nv-binaries-restricted-codecs \
 	${IMAGE_INSTALL_MACHINE} \
 	trdx-config \
 	\
