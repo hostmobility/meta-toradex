@@ -36,6 +36,7 @@ IMAGE_INSTALL += " \
 	gpioconfig \
 	tegrastats \
 	devmem2 \
+	evtest \
 	hdparm \
 	iperf \
 	i2c-tools \
