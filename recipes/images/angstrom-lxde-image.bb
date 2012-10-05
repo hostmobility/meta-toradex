@@ -76,7 +76,7 @@ zeroconf \
 IMAGE_INSTALL += " \
 	${IMAGE_INSTALL_CLASSIC} \
 	virtual-psplash \
-	angstrom-task-boot \
+	angstrom-packagegroup-boot \
 	task-basic \
 	udev-extra-rules \
 	${CONMANPKGS} \
@@ -87,10 +87,7 @@ IMAGE_INSTALL += " \
 	xserver-common \
 	xserver-xorg-extension-dbe \
 	xserver-xorg-extension-extmod \
-	xserver-xorg-extension-dri \
-	xserver-xorg-extension-dri2 \
 	xserver-xorg-extension-extmod \
-	xserver-xorg-extension-glx \
 	xauth \
 	xhost \
 	xset \
