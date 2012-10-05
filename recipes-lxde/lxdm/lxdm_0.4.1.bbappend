@@ -1,11 +1,9 @@
-PRINC = "2"
+PRINC = "3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
-	file://missingAM_GLIB_GNU_GETTEXT.patch \
 	file://configfiles.patch \
-	file://fix_event_check_bug_caused_cpu_100.patch \
 "
 
 #issues during V2.0alpha development, might be removed later
