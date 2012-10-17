@@ -13,6 +13,9 @@ require trdx-image-fstype.inc
 #create the file /etc/timestamp
 IMAGE_PREPROCESS_COMMAND = "rootfs_update_timestamp"
 
+#remove interfering sysv scripts
+ROOTFS_POSTINSTALL_COMMAND = "for i in ${IMAGE_ROOTFS}/etc/rc0.d ${IMAGE_ROOTFS}/etc/rc1.d ${IMAGE_ROOTFS}/etc/rc2.d ${IMAGE_ROOTFS}/etc/rc3.d ${IMAGE_ROOTFS}/etc/rc4.d ${IMAGE_ROOTFS}/etc/rc5.d ${IMAGE_ROOTFS}/etc/rc6.d ${IMAGE_ROOTFS}/etc/rcS.d ; do rm -f $i/*dropbear $i/*avahi-daemon $i/*dbus-1 $i/*lxdm $i/*ntpd $i/*syslog $i/*ofono $i/*alsa-state $i/*networking $i/*udev-late-mount $i/*sendsigs $i/*save-rtc.sh $i/*umountnfs.sh $i/*portmap $i/*umountfs $i/*halt $i/*rmnologin.sh $i/*reboot; rm -f $i/*banner.sh $i/*sysfs.sh $i/*checkroot.sh $i/*alignment.sh $i/*mountall.sh $i/*populate-volatile.sh  $i/*devpts.sh  $i/*hostname.sh $i/*portmap  $i/*mountnfs.sh  $i/*bootmisc.sh ; done"
+
 #IMAGE_LINGUAS = ""
 IMAGE_LINGUAS = "en-us"
 #IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es kn-in ml-in ta-in"
@@ -32,8 +35,7 @@ CONMANPKGS_libc-uclibc = ""
 DEPENDS += "gst-plugins-good gst-plugins-bad gst-plugins-ugly"
 
 #deploy the OpenGL ES headers to the sysroot
-#this package does not compile with hf
-#DEPENDS += "nvsamples"
+DEPENDS += "nvsamples"
 
 #build some ipk which are needed together with CAN, but do not yet install them
 DEPENDS += "canutils libsocketcan iproute2"
@@ -68,14 +70,12 @@ libwnck \
 libxres \
 makedevs \
 mime-support \
-sysvinit \
 xcursor-transparent-theme \
 zeroconf \
 "
 
 IMAGE_INSTALL += " \
 	${IMAGE_INSTALL_CLASSIC} \
-	virtual-psplash \
 	angstrom-packagegroup-boot \
 	task-basic \
 	udev-extra-rules \
