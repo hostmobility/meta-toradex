@@ -1,14 +1,11 @@
-PRINC = "3"
+PRINC = "4"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
-	file://configfiles.patch \
+    file://configfiles.patch \
+    file://lxdm.service \
 "
-
-#issues during V2.0alpha development, might be removed later
-INITSCRIPT_PARAMS_colibri-t20  = "start 98 5 2 . stop 20 0 1 6 ."
-
 
 pkg_postinst_${PN}() {
   # Register up as default dm
@@ -20,4 +17,10 @@ pkg_postinst_${PN}() {
  
 pkg_postrm_${PN} () {
   sed -i /lxdm/d ${sysconfdir}/X11/default-display-manager || true
+}
+
+do_install_append () {
+    install -d ${D}/${sysconfdir}/systemd/system
+    install -m 0644 ${WORKDIR}/lxdm.service ${D}/${sysconfdir}/systemd/system
+    ln -s lxdm.service ${D}/${sysconfdir}/systemd/system/display-manager.service
 }
