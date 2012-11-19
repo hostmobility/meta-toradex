@@ -3,7 +3,15 @@
 #the following builds cross gdb and gdbserver
 DEPENDS += "gdb-cross"
 
-#IMAGE_INSTALL_MACHINE_colibri-t20 = "trdx-odm"
+IMAGE_INSTALL_T20_T30 = " \
+	gpioconfig \
+	tegrastats \
+	trdx-nv-binaries \
+	trdx-nv-binaries-nv-gstapps \
+	trdx-nv-binaries-restricted-codecs \
+"
+IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30}"
+IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30}"
 
 IMAGE_INSTALL_MACHINE = ""
 
@@ -33,8 +41,6 @@ IMAGE_INSTALL += " \
 	mtd-utils \
 	update-modules \
 	\
-	gpioconfig \
-	tegrastats \
 	devmem2 \
 	evtest \
 	hdparm \
@@ -45,9 +51,6 @@ IMAGE_INSTALL += " \
 	lmbench \
 	nbench-byte \
 	\
-	trdx-nv-binaries \
-	trdx-nv-binaries-nv-gstapps \
-	trdx-nv-binaries-restricted-codecs \
 	${IMAGE_INSTALL_MACHINE} \
 	trdx-config \
 	\
