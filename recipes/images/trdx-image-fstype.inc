@@ -25,8 +25,8 @@ do_rootfs_append() {
     mv ${IMAGE_ROOTFS}/../bin/u-boot-${MACHINE}.bin ${IMAGE_ROOTFS}/../bin/u-boot.bin
 
     # add the rootfs version to the welcome banner
-    echo "${IMAGE_NAME}${PV}_${DATE}" >> /etc/issue
-    echo "" >> /etc/issue
+    echo "${IMAGE_NAME}${PV}_${DATE}" >> ${IMAGE_ROOTFS}/etc/issue
+    echo "" >> ${IMAGE_ROOTFS}/etc/issue
 
     #create tarball
     DATE=`date +%Y%m%d`
