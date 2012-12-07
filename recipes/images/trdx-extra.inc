@@ -16,6 +16,9 @@ IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30}"
 IMAGE_INSTALL_MACHINE = ""
 
 IMAGE_INSTALL += " \
+	linux-firmware-ralink \
+	usb-rndis-systemd \
+	\
 	alsa-utils \
 	alsa-utils-aplay \
 	alsa-utils-amixer \

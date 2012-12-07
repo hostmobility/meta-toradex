@@ -83,7 +83,7 @@ IMAGE_INSTALL += " \
 	${ROOTFS_PKGMANAGE_PKGS} \
 	timestamp-service \
 	task-base-extended \
-	${XSERVER}\
+	${XSERVER} \
 	xserver-common \
 	xserver-xorg-extension-dbe \
 	xserver-xorg-extension-extmod \
@@ -92,7 +92,6 @@ IMAGE_INSTALL += " \
 	xhost \
 	xset \
 	\
-	${XSERVER} \
 	xrandr \
 	xrdb \
 	xorg-minimal-fonts xserver-xorg-multimedia-modules xserver-xorg-utils \
@@ -118,7 +117,9 @@ IMAGE_INSTALL += " \
 	gst-plugins-base-theora \
 	gst-plugins-base-videotestsrc \
 	gst-plugins-base-vorbis \
+	gst-plugins-good-audioparsers \
 	gst-plugins-good-avi \
+	gst-plugins-good-id3demux \
 	gst-plugins-good-isomp4 \
 	gst-plugins-good-matroska \
 	gst-plugins-good-rtp \
@@ -133,9 +134,6 @@ IMAGE_INSTALL += " \
 	alsa-states \
 	firefox \
 "
-
-# firefox at the moment segfaults
-#	flash-plugins \
 
 #	gst-plugin-mpegdemux 
 
