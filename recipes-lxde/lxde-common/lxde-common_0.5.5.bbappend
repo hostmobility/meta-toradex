@@ -1,7 +1,7 @@
 PRINC = "2"
-WALLPAPER-MACHINE = "toradex-neutral.png"
-WALLPAPER-MACHINE_colibri-t20 = "toradex-t20.png"
-WALLPAPER-MACHINE_colibri-t30 = "toradex-t30.png"
+WALLPAPER-MACHINE = "Wallpaper_Toradex.png"
+WALLPAPER-MACHINE_colibri-t20 = "Wallpaper_ColibriT20.png"
+WALLPAPER-MACHINE_colibri-t30 = "Wallpaper_ColibriT30.png"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
@@ -19,7 +19,7 @@ SRC_URI += " \
 
 do_install_append () {
     install -m 0755 -d ${D}/${datadir}/lxde/wallpapers
-    install -m 0644 ${WORKDIR}/toradex-*.png  ${D}/${datadir}/lxde/wallpapers/
+    install -m 0644 ${WORKDIR}/Wallpaper*.png  ${D}/${datadir}/lxde/wallpapers/
     ln -sf ${WALLPAPER-MACHINE} ${D}/${datadir}/lxde/wallpapers/toradex.png
     rm  ${D}/etc/xdg/lxsession/LXDE/desktop.conf
     install -m 0644 ${WORKDIR}/desktop.conf ${D}/etc/xdg/lxsession/LXDE/
