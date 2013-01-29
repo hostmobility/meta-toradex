@@ -1,14 +1,15 @@
-PRINC = "2"
+PRINC = "3"
 WALLPAPER-MACHINE = "Wallpaper_Toradex.png"
 WALLPAPER-MACHINE_colibri-t20 = "Wallpaper_ColibriT20.png"
 WALLPAPER-MACHINE_colibri-t30 = "Wallpaper_ColibriT30.png"
+WALLPAPER-MACHINE_apalis-t30 = "Wallpaper_ApalisT30.png"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
 SRC_URI += " \
 	file://autostart.patch \
 	file://consistent_defconfig_dirs.patch \
-	file://toradex-neutral.png \
+	file://Wallpaper_Toradex.png \
 	file://${WALLPAPER-MACHINE} \
 	file://wallpaper.patch \
 	file://desktop.conf \
