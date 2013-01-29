@@ -1,9 +1,12 @@
 #create the deployment directory-tree
 
 BURNFLASH := "${THISDIR}/files/${MACHINE}/burnflash.tar.bz2"
+
 S = "${WORKDIR}/burnflash"
+
 IMAGE_NAME_colibri-t20 = "T20_LinuxImage"
 IMAGE_NAME_colibri-t30 = "T30_LinuxImage"
+IMAGE_NAME_apalis-t30 = "ApalisT30_LinuxImage"
 IMAGE_NAME_colibri-pxa = "PXA_LinuxImage"
 
 IMAGE_ROOTFS = "${WORKDIR}/${IMAGE_NAME}${PV}/rootfs"
