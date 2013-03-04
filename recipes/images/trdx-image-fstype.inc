@@ -26,6 +26,9 @@ do_rootfs_append() {
     echo "${IMAGE_NAME}${PV}_${DATE}" >> ${IMAGE_ROOTFS}/etc/issue
     echo "" >> ${IMAGE_ROOTFS}/etc/issue
 
+    # remove intermediate file rootfs.lock
+    rm ${WORKDIR}/${IMAGE_NAME}${PV}/rootfs.lock
+
     #create tarball
     DATE=`date +%Y%m%d`
     cd ${WORKDIR}; tar -cjvf ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}${PV}_${DATE}.tar.bz2 ${IMAGE_NAME}${PV}
