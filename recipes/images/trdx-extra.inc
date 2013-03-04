@@ -13,11 +13,10 @@ IMAGE_INSTALL_T20_T30 = " \
 IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30}"
 IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30}"
 IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
-    udisks \
     pciutils \
     iproute2 \
     canutils \
-    max9526-i2c \
+    lvds-ctrl \
 "
 
 IMAGE_INSTALL_MACHINE = ""
@@ -50,6 +49,8 @@ IMAGE_INSTALL += " \
     ldd \
     lsof \
     mtd-utils \
+    udisks \
+    dosfstools \
     update-modules \
     \
     devmem2 \
