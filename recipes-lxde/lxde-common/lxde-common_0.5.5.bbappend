@@ -1,10 +1,12 @@
-PRINC = "4"
+PRINC = "5"
 WALLPAPER-MACHINE = "Wallpaper_Toradex.png"
 WALLPAPER-MACHINE_colibri-t20 = "Wallpaper_ColibriT20.png"
 WALLPAPER-MACHINE_colibri-t30 = "Wallpaper_ColibriT30.png"
 WALLPAPER-MACHINE_apalis-t30 = "Wallpaper_ApalisT30.png"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI += " \
 	file://autostart.patch \
