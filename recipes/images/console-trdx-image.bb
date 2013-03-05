@@ -45,7 +45,7 @@ IMAGE_INSTALL += " \
 	file \
 "
 
-include trdx-extra.inc
+require trdx-extra.inc
 
 IMAGE_DEV_MANAGER   = "udev"
 IMAGE_INIT_MANAGER  = "systemd"
