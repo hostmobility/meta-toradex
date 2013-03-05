@@ -6,7 +6,7 @@ PR = "r3"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DEPENDS = "gtk+"
-RDEPENDS = "gtk+"
+RDEPENDS_{PN} = "gtk+"
 
 SRC_URI =  "file://GPIOConfig"
 SRC_URI += "file://GPIOConfig.desktop"
