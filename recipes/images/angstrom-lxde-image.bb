@@ -97,6 +97,7 @@ IMAGE_INSTALL += " \
 	xauth \
 	xhost \
 	xset \
+	setxkbmap \
 	\
 	xrandr \
 	xrdb \
