@@ -63,7 +63,6 @@ IMAGE_INSTALL += " \
     mtd-utils \
     udisks \
     dosfstools \
-    update-modules \
     \
     devmem2 \
     evtest \
