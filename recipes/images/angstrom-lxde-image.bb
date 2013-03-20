@@ -106,6 +106,7 @@ IMAGE_INSTALL += " \
 	libxdamage libxvmc libxinerama \
 	libxcursor \
 	\
+	florence \
 	bash \
 	tinylogin \
 	\
