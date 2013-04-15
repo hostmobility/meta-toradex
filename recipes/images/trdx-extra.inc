@@ -4,12 +4,13 @@
 DEPENDS += "gdb-cross"
 
 IMAGE_INSTALL_T20_T30 = " \
-	gpioconfig \
-	tegrastats \
-	trdx-nv-binaries \
-	trdx-nv-binaries-nv-gstapps \
-	trdx-nv-binaries-restricted-codecs \
+    gpioconfig \
+    tegrastats \
+    trdx-nv-binaries \
+    trdx-nv-binaries-nv-gstapps \
+    trdx-nv-binaries-restricted-codecs \
 "
+
 IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30}"
 IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30}"
 IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
