@@ -5,12 +5,12 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=3f40d7994397109285ec7b81fdeb3b58"
 
 PV = "V2.0"
-PR = "r3"
+PR = "r5"
 
 #start of the resulting deployable tarball
 IMAGE_NAME_colibri-t20 = "T20_LinuxImage"
 IMAGE_NAME_colibri-t30 = "T30_LinuxImage"
-IMAGE_NAME_apalis-t30 = "ApalisT30_LinuxImage"
+IMAGE_NAME_apalis-t30 = "Apalis_T30_LinuxImage"
 IMAGE_NAME_colibri-pxa = "PXA_LinuxImage"
 
 #create the deployment directory-tree
@@ -102,6 +102,7 @@ IMAGE_INSTALL += " \
 	xrandr \
 	xrdb \
 	xorg-minimal-fonts xserver-xorg-multimedia-modules xserver-xorg-utils \
+	scrot \
 	\
 	libxdamage libxvmc libxinerama \
 	libxcursor \
