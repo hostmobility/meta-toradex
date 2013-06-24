@@ -128,6 +128,7 @@ IMAGE_INSTALL += " \
 	gst-plugins-base-vorbis \
 	gst-plugins-good-audioparsers \
 	gst-plugins-good-avi \
+	gst-plugins-good-deinterlace \
 	gst-plugins-good-id3demux \
 	gst-plugins-good-isomp4 \
 	gst-plugins-good-matroska \
