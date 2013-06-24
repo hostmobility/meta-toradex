@@ -12,13 +12,19 @@ IMAGE_INSTALL_T20_T30 = " \
 "
 
 IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30}"
-IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30}"
+
+IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30} \
+    fs-init \
+"
+
 IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
     pciutils \
     iproute2 \
     canutils \
     lvds-ctrl \
+    fs-init \
 "
+
 
 IMAGE_INSTALL_MACHINE = ""
 
