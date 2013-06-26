@@ -15,12 +15,12 @@ do_rootfs_prepend() {
 do_rootfs_append() {
     # put u-boot, kernel into the bin directories, remove the kernel from the rootfs/boot
     rm ${IMAGE_ROOTFS}/boot/uImage*
-    cp -pP ${DEPLOY_DIR_IMAGE}/uImage* ${IMAGE_ROOTFS}/../bin/
-    mv ${IMAGE_ROOTFS}/../bin/uImage-${MACHINE}.bin ${IMAGE_ROOTFS}/../bin/uImage
+    cp -pP ${DEPLOY_DIR_IMAGE}/uImage* ${IMAGE_ROOTFS}/../${MACHINE}_bin/
+    mv ${IMAGE_ROOTFS}/../${MACHINE}_bin/uImage-${MACHINE}.bin ${IMAGE_ROOTFS}/../${MACHINE}_bin/uImage
 
-    cp -pP ${DEPLOY_DIR_IMAGE}/u-boot* ${IMAGE_ROOTFS}/../bin/
-    rm -f ${IMAGE_ROOTFS}/../bin/u-boot-hsmmc-${MACHINE}.bin
-    mv ${IMAGE_ROOTFS}/../bin/u-boot-${MACHINE}.bin ${IMAGE_ROOTFS}/../bin/u-boot.bin
+    cp -pP ${DEPLOY_DIR_IMAGE}/u-boot* ${IMAGE_ROOTFS}/../${MACHINE}_bin/
+    rm -f ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot-hsmmc-${MACHINE}.bin
+    mv ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot-${MACHINE}.bin ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot.bin
 
     # add the rootfs version to the welcome banner
     echo "${IMAGE_NAME}${PV}_${DATE}" >> ${IMAGE_ROOTFS}/etc/issue
