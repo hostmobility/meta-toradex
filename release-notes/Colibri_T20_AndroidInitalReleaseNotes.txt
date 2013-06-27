@@ -1,0 +1,68 @@
+*****************************************************
+Release Notes:  Android Preview Image for Colibri T20
+*****************************************************
+
+Please note that this Android Preview Image is for evaluation purposes only, and is provided as-is.
+Customers should also note that support is limited, and source code for this image will not be published at the present time.
+
+Contents:
+- fastboot boot loader
+- Linux 2.6.39.4 kernel
+- Android ICS 4.0.3 file system
+
+Licensing:
+- proprietary multimedia codecs included for evaluation purpose only
+- customer required to obtain proper re-distribution license
+
+Notes:
+- 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoard, X13 on Iris) without any handshake
+
+Working:
+- NAND flash MTD YAFFS2
+- serial console debug UARTA
+- HDMI aka DVI-D 720p display
+- MMC/SD card
+- USB host port
+- USB keyboard/mouse
+- USB memory stick
+- ADB via USB device aka micro USB port
+- Ethernet eth0 using DHCP
+- video playback 720p/1080p
+- browser
+
+Not working:
+- TFTLCD aka DVI-A exhibits bad timing
+- AC97 audio/touch
+- HDMI SPDIF audio
+- suspend
+- power management
+- browser download
+
+Known issues:
+- input device e.g. USB keyboard/mouse needed otherwise gets stuck at boot animation
+- time needs to be set for download to work
+
+**************************************************************************************************
+NAND Boot: Colibri T20 512MB V1.1c (Sample), Colibri T20 512MB V1.2a or Colibri T20 512MB IT V1.2a
+**************************************************************************************************
+
+Initial Preparation:
+- download and extract T20_AndroidPreviewImage.tar.bz2 package
+
+Optional Google Apps Installation:
+- download latest gapps-ics-xyz-signed.zip from http://wiki.cyanogenmod.com/wiki/Latest_Version#Google_Apps
+- extract contents of system folder from gapps-ics-xyz-signed.zip into previously extracted rootfs folder
+- e.g. unzip gapps-ics-xyz-signed.zip; sudo cp -pPR system/* rootfs
+
+Flash NAND:
+- connect USB micro A/B (X12) to development workstation using regular micro USB cable
+- short pin 1-2 of JP1 on Iris for RECOVERY (other carrier boards see http://developer.toradex.com/hardware-resources/arm-family/colibri-module/colibri-recovery-mode)
+- apply power or reset
+- run update.sh script
+- use -v V1_1 option for V1.1c module
+
+Boot from NAND:
+- do no more short any pins of JP1 on Iris
+- power cycle or reset
+
+Toradex, May 15, 2012

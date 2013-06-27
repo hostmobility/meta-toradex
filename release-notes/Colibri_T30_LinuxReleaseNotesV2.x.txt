@@ -1,0 +1,197 @@
+************************************************
+Release Notes:  Linux Image V2.x for Colibri T30
+************************************************
+
+Contents:
+- U-Boot 2011.06 boot loader
+- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r2
+- OpenEmbedded oe-core 2012.10 based root file system, using LXDE desktop environment
+
+Licensing:
+- proprietary multimedia codecs included for evaluation purpose only
+- customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.0 Beta 1 (March 28, 2013)
+- U-Boot:
+  - no changes
+- Linux kernel:
+  - fbcon: logo: allow easy integration of a custom Linux boot logo
+- rootfs / oe-core:
+  - use newer Linux kernel
+  - use latest GPIOConfig, fixed SODIMM numbers
+  - use a unified recipe for the Linux kernel
+  - UBOOT_MACHINE variable definition moved to machine .conf file
+  - add setxkbmap package
+  - add florence package, virtual keyboard application
+  - burnflash: fix race condition in genext3fs.sh and use -F option for mount
+  - xorg framebuffer depth 16bit
+  - use new Toradex CI
+
+- sources git.toradex.com tag T30_LinuxImageV2.0Beta1_20130314
+
+Known Issues:
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution, 
+  comments with timings for other resolutions provided
+- some windows have garbled titlebar, e.g. lxterminal
+- lxappearance is segfaulting upon start
+- connecting an analog mic to the on module codec resets the codec, so that 
+  neither headphone out nor mic in works anymore. Workaround: Have mic 
+  connected before boot or change the output source between DAC/LineIn
+
+
+********************************************************************************
+Linux Image V2.0 Alpha 1 (January 22, 2013)
+- U-Boot:
+  - moved to proper machine type
+- Linux kernel:
+  - added one wire platform data (conditional, CONFIG_W1_MASTER_TEGRA must be enabled)
+  - fix USB hang on device insertion
+  - added correct spidev platform data (/dev/spidev0.0)
+  - PWM B, PWM C, PWM D now accessible from userspace, /sys/class/leds/
+  - refined pin muxing
+  - added thermal throttling, i.e. CPU freq. is reduced when CPU gets hot
+  - updated audio codec driver, audio input now working
+  - GPIO keys implementation
+  - LP1 suspend support
+  - moved to proper machine type
+  - fix PMIC regulator platform data
+- oe-core:
+  - use latest u-boot and Linux kernel
+  - use latest GPIOConfig, fixes issues with tristated pins and GPIO with num >222
+  
+- sources git.toradex.com tag T30_LinuxImageV2.0Alpha1_20130122
+
+Known Issues:
+- We are in an early Alpha state, not all functions are tested.
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution, 
+  comments with timings for other resolutions provided
+- some windows have garbled titlebar, e.g. lxterminal
+- lxappearance is segfaulting upon start
+- issues with the genext3.sh scripts: if your language settings expect 
+  something different to 'y' to a question, the script failes.
+  The rootfs is empty resulting in a kernel panic during boot.
+  Workaround: edit line 38 of bin/genext3.sh as follows:
+  old: echo y | mkfs.ext3 $@ -L arm 
+  new: mkfs.ext3 -F -L arm $@
+
+********************************************************************************
+Linux Image V2.0 Alpha 0 (December 27, 2012)
+(ported form the Linux Image V2.0 Beta1 for Colibri T20)
+- U-Boot:
+  - first release
+- Linux kernel:
+  - first release
+- oe-core:
+  - first release
+- sources git.toradex.com tag T30_LinuxImageV2.0Alpha0_20121227
+
+Known Issues:
+- We are in an early Alpha state, not all functions are tested.
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- When no device was attached to the USB host port during boot, the 
+  system crashes when one is attached when the system is up.
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution, 
+  comments with timings for other resolutions provided
+- some windows have garbled titlebar, e.g. lxterminal
+- lxappearance is segfaulting upon start
+
+********************************************************************************
+Notes:
+- 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoards, X13 on Iris) without any handshake
+- user account: root with empty password
+- ext3 root file system
+- opkg package manager
+- HDMI: not all pixel clock frequencies allow for HDMI audio
+- CRT: The T30 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
+- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
+
+Working on latest image:
+- U-Boot boot loader
+  - environment storage in eMMC
+  - Ethernet
+  - serial console
+  - USB storage as host
+- Linux kernel
+  - temperature sensor /sys/bus/i2c/devices/4-004c
+  - RTC (Tegra internal, PMIC and board level I2C RTC)
+  - Ethernet eth0
+  - serial console debug UARTA
+  - high speed serial UARTB and UARTD
+  - I2C via /dev/i2c-X
+  - MMC/SD card, optional 8-bit SDHCI
+  - PWM LEDs /sys/class/leds/
+  - HDMI SPDIF audio
+  - analog audio capture, playback and touch
+    - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
+    - touch has some jitter
+  - SPI via /dev/spidev0.0
+  - GMI with multiplexed nPWE and RDnWR
+  - framebuffer console
+  - custom Ethernet MAC Address
+  - USB host port
+  - USB audio driver
+  - USB webcam
+  - USB raw HID device /dev/hidrawX
+  - automatic USB device/host detection aka OTG support
+  - suspend LP1
+- Linux user-space
+  - graphics (LVDS-1 aka TFTLCD and HDMI-1 aka DVI-D)
+  - tegrastats
+  - Firefox
+  - Gstreamer video playback, dual full HD video decode
+  - GPIO config tool
+  - LXDE
+  - tegrastats-gtk, CPU information visible in graphical environment
+
+Not working or not tested:
+- U-Boot boot loader
+  - eMMC with NVIDIA partition table parsing
+  - MMC/SD cards not recognized
+  - Toradex Colibri configuration block handling (i.e. all modules have the same MAC address)
+  - U-Boot USB keyboard
+- Linux kernel
+  - GPIOlib /sys/class/gpio (no pins are yet exported, the interface would work)
+  - analog input AD0 .. AD3 not implemented
+  - serial number and board revision
+  - watchdog
+  - USB device Ethernet RNDIS, provided by Android gadget
+- Linux user-space
+  - Adobe Flash not provided by L4T (and probably never will)
+  - opkg package feeds seem to not be usable
+
+*************************************
+eMMC Boot: Colibri T30 V1.1b (Sample)
+*************************************
+
+Initial Preparation:
+- download and extract T30_LinuxImageVx.yz.tar.bz2 package
+
+Flash eMMC:
+- EvalBoard V3.1a
+  - connect USB B (X29) or USB micro A/B (X30) to development workstation using regular or micro USB cable
+  - the jumper JP2 must be open
+  - press and hold recovery mode switch (SW9) during power up
+- Iris V1.1a
+  - connect USB micro A/B (X12) to development workstation using regular micro USB cable
+  - short pin 1-2 of JP1 on Iris for RECOVERY
+(other carrier boards see http://developer.toradex.com/knowledge-base/colibri-recovery-mode)
+- make sure that the carrier board supports USB high speed
+  - Iris & EvalBoard V3.1a OK, for other carrier boards see http://developer.toradex.com/knowledge-base/usb-2.0-high-speed-%28480mbps%29 )
+- apply power or reset
+- run update.sh script
+
+Boot from eMMC:
+- EvalBoard V3.1a
+  - do no longer press SW9
+- Iris V1.1a
+  - do no longer short any pins of JP1
+- power cycle
+- upon first boot post-install scripts are run which takes around 2 minutes, please be patient
+
+Toradex, March 28, 2013

@@ -1,0 +1,142 @@
+***********************************************
+Release Notes:  Linux Image V2.x for Apalis T30
+***********************************************
+
+Contents:
+- U-Boot 2011.06 boot loader
+- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r3
+- OpenEmbedded oe-core 2012.10 based root file system, using LXDE desktop environment
+
+Licensing:
+- proprietary multimedia codecs included for evaluation purpose only
+- customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.0 Alpha 1 (March 15, 2013)
+(ported form the Linux Image V2.0 Beta1 for Colibri T30)
+- U-Boot:
+  - first release
+- Linux kernel:
+  - first release
+- oe-core:
+  - first release
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.0Alpha1_20130315
+
+Known Issues:
+- We are in an early Alpha state, not all functions are tested.
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- LVDS aka TFTLCD resolution hard-coded in kernel to full HD resolution, 
+  comments with timings for other resolutions provided
+- some windows have garbled titlebar, e.g. lxterminal
+- lxappearance is segfaulting upon start
+- Gigabit Ethernet MAC address hard-coded to 00:0e:c6:87:72:01
+- stability issues on concurrent PCIe and SATA stress testing
+- connecting an analog mic to the on module codec resets the codec, so that 
+  neither headphone out nor mic in works anymore. Workaround: Have mic 
+  connected before boot or change the output source between DAC/LineIn
+
+********************************************************************************
+Notes:
+- 115200 baud serial debug console on UARTA aka UART1 (EvalBoard lower X28 resp. X29 depending on JP10/12) without any handshake
+- user account: root with empty password
+- ext3 root file system
+- opkg package manager
+- HDMI: not all pixel clock frequencies allow for HDMI audio
+- CRT: the T30 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
+- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
+
+Working on latest image:
+- U-Boot boot loader
+  - environment storage in eMMC
+  - serial console
+- Linux kernel
+  - GPIOlib /sys/class/gpio (LVDS transmitter configuration)
+  - temperature sensor /sys/bus/i2c/devices/4-004c
+  - RTC (Tegra internal, PMIC and board level I2C RTC)
+  - Gigabit Ethernet eth0
+  - serial console debug UARTA aka UART1
+  - high speed serial UARTB aka UART3, UARTC aka UART4 and UARTD aka UART2
+  - I2C via /dev/i2c-X
+  - 8-bit MMC card mmc1
+  - 4-bit SD card mmc2
+  - PWM LEDs /sys/class/leds/
+  - HDMI HDA audio
+  - analog audio capture, playback and touch
+    - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
+    - touch has some jitter
+  - SPI via /dev/spidev0.0 aka SPI1 and /dev/spidev4.2 aka SPI2
+  - USB host port
+  - USB audio driver
+  - USB webcam
+  - USB raw HID device /dev/hidrawX
+  - automatic USB device/host/suspend detection aka full OTG support
+  - suspend LP1
+  - CAN via can0 and can1
+  - PCIe (regular ports and mini-PCIe slot)
+  - SATA (regular port or mSATA slot
+  - parallel camera interface
+- Linux user-space
+  - graphics (LVDS-1 aka TFTLCD and HDMI-1 aka DVI-D)
+  - tegrastats
+  - Firefox
+  - Gstreamer video playback, dual full HD video decode
+  - LXDE
+  - tegrastats-gtk, CPU information visible in graphical environment
+  - LVDS transmitter configuration (see lvds-dual-channel.sh resp. lvds-single-channel.sh)
+
+Not working or not tested:
+- U-Boot boot loader
+  - eMMC with NVIDIA partition table parsing
+  - MMC/SD cards not recognized
+  - Toradex Apalis configuration block handling (i.e. all modules have the same MAC address)
+  - U-Boot USB keyboard
+  - Ethernet
+  - USB storage as host
+- Linux kernel
+  - analog input AD0 .. AD3 not implemented
+  - serial number and board revision
+  - watchdog
+  - USB device Ethernet RNDIS, provided by Android gadget
+  - framebuffer console
+  - custom Ethernet MAC Address
+  - HDA audio
+  - IrDA
+  - RS-422/485
+  - SIM card
+- Linux user-space
+  - Adobe Flash not provided by L4T (and probably never will)
+  - opkg package feeds seem to not be usable
+  - GPIO config tool missing Apalis MXM3 pin description integration
+
+**********************************************
+eMMC Boot: Apalis T30 V1.0a and V1.0b (Sample)
+**********************************************
+
+Initial Preparation:
+- download and extract Apalis_T30_LinuxImageVx.yz.tar.bz2 package
+
+Flash eMMC:
+- EvalBoard V1.0a
+  - connect USB micro A/B (X49) or USB B (X50) to development workstation using micro or regular USB cable
+  - connect serial debug console to lower X28 or X29 using null modem RS-232 or regular USB cable
+  - enter recovery mode:
+    - Eboot (e.g. transitioning from WEC):
+      - 9600 baud without any handshake
+      - hold space key while applying power or resetting
+      - press x to enter command mode
+      - use 'reboot rcm' command
+    - U-Boot (e.g. updating Embedded Linux):
+      - 115200 baud without any handshake
+      - apply power or reset
+      - hit any key to stop auto booting
+      - use 'enterrcm' command
+  - for more information about recovery mode please consult Apalis T30 datasheet chapter 6
+- run update.sh script
+
+Boot from eMMC:
+- EvalBoard V1.0a
+- power cycle
+- upon first boot post-install scripts are run which takes around 2 minutes, please be patient
+
+Toradex, March 21, 2013
