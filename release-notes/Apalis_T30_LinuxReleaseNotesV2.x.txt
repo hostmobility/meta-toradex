@@ -12,6 +12,52 @@ Licensing:
 - customer required to obtain proper re-distribution license
 
 ********************************************************************************
+Linux Image V2.0 Beta 1 (June 26, 2013)
+- U-Boot:
+  - initial integration
+  - integrate NVIDIA partition table parsing incl. Toradex Apalis configuration block
+  - adjust available amount of memory
+  - activate DVI-D framebuffer console
+  - increase CPU frequency at boot
+  - decrease boot delay
+  - fix overflow in HCD conversion
+- Linux kernel:
+  - hack to make newer SD cards work by adding a quirk for lack of 1.8v support
+  - revise Ethernet MAC address assignment
+  - fix PCIe AXI response decoding errors
+  - fix PCIe reset issue
+  - remove spurious tegra_aes_device
+  - video4linux adv7180 and max9526 integration
+  - fix PCIe by forcing GEN1 speed
+  - set board local critical temperature to 95°C
+  - hack to avoid 24 Hz mode in X resulting in no display at all
+  - silence extensive HDMI HDA audio messages
+- rootfs / oe-core:
+  - update to latest git revision for kernel and u-boot
+  - extend rootfs partition on eMMC to its full partition size on first boot
+  - unified update procedure for all T20/T30
+  - limit journal size
+  - nv-binaries: update to L4T R16.3
+  - added packages: gstreamer deinterlacer, scrot
+  - lxterminal, florence: fix garbled titlebar
+
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.0Beta1_20130626
+
+Known Issues:
+- We are in an early Beta state, not all functions are tested.
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- LVDS aka TFTLCD resolution hard-coded in kernel to full HD resolution, 
+  comments with timings for other resolutions provided
+- lxappearance is segfaulting upon start
+- connecting an analogue mic to the on module codec resets the codec, so that 
+  neither headphone out nor mic in works anymore. Workaround: Have mic 
+  connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+  the first few minutes until completed
+
+********************************************************************************
 Linux Image V2.0 Alpha 1 (March 15, 2013)
 (ported form the Linux Image V2.0 Beta1 for Colibri T30)
 - U-Boot:
@@ -49,7 +95,12 @@ Notes:
 Working on latest image:
 - U-Boot boot loader
   - environment storage in eMMC
-  - serial console
+  - ASIX based USB to Ethernet adapters
+  - MMC/SD cards (only GPT partitioned)
+  - eMMC flash with NVIDIA partition table parsing
+  - serial console debug UARTA aka UART1
+  - Toradex Apalis configuration block handling
+  - USB storage as host
 - Linux kernel
   - GPIOlib /sys/class/gpio (LVDS transmitter configuration)
   - temperature sensor /sys/bus/i2c/devices/4-004c
@@ -66,47 +117,44 @@ Working on latest image:
     - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
     - touch has some jitter
   - SPI via /dev/spidev0.0 aka SPI1 and /dev/spidev4.2 aka SPI2
+  - framebuffer console
+  - custom Ethernet MAC Address
+  - serial number and board revision
   - USB host port
   - USB audio driver
   - USB webcam
   - USB raw HID device /dev/hidrawX
+  - USB device Ethernet RNDIS, provided by Android gadget
   - automatic USB device/host/suspend detection aka full OTG support
   - suspend LP1
   - CAN via can0 and can1
   - PCIe (regular ports and mini-PCIe slot)
   - SATA (regular port or mSATA slot
+  - DVFS power management
   - parallel camera interface
 - Linux user-space
   - graphics (LVDS-1 aka TFTLCD and HDMI-1 aka DVI-D)
   - tegrastats
   - Firefox
-  - Gstreamer video playback, dual full HD video decode
+  - Gstreamer video encode and playback, dual full HD video decode
   - LXDE
   - tegrastats-gtk, CPU information visible in graphical environment
   - LVDS transmitter configuration (see lvds-dual-channel.sh resp. lvds-single-channel.sh)
 
 Not working or not tested:
 - U-Boot boot loader
-  - eMMC with NVIDIA partition table parsing
-  - MMC/SD cards not recognized
-  - Toradex Apalis configuration block handling (i.e. all modules have the same MAC address)
   - U-Boot USB keyboard
-  - Ethernet
-  - USB storage as host
+  - Gigabit Ethernet
 - Linux kernel
   - analog input AD0 .. AD3 not implemented
-  - serial number and board revision
   - watchdog
-  - USB device Ethernet RNDIS, provided by Android gadget
-  - framebuffer console
-  - custom Ethernet MAC Address
   - HDA audio
   - IrDA
   - RS-422/485
   - SIM card
 - Linux user-space
   - Adobe Flash not provided by L4T (and probably never will)
-  - opkg package feeds seem to not be usable
+  - opkg package feeds don't seem to be usable
   - GPIO config tool missing Apalis MXM3 pin description integration
 
 **********************************************
@@ -114,7 +162,7 @@ eMMC Boot: Apalis T30 V1.0a and V1.0b (Sample)
 **********************************************
 
 Initial Preparation:
-- download and extract Apalis_T30_LinuxImageVx.yz.tar.bz2 package
+- download and extract T30_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash eMMC:
 - EvalBoard V1.0a
@@ -122,7 +170,7 @@ Flash eMMC:
   - connect serial debug console to lower X28 or X29 using null modem RS-232 or regular USB cable
   - enter recovery mode:
     - Eboot (e.g. transitioning from WEC):
-      - 9600 baud without any handshake
+      - 115200 baud without any handshake
       - hold space key while applying power or resetting
       - press x to enter command mode
       - use 'reboot rcm' command
@@ -139,4 +187,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, March 21, 2013
+Toradex, June 27, 2013
