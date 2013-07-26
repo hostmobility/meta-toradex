@@ -1,5 +1,5 @@
 IMAGE_INSTALL += " \
-	task-lxde-extended \
+	packagegroup-lxde-extended \
 	\
 	xinput-calibrator \
 	\
@@ -20,7 +20,6 @@ IMAGE_INSTALL += " \
 	\
 	lxtask \
 	lxpolkit \
-	lxsession-edit \
 	\
 	lxshortcut \
 	lxlauncher \
