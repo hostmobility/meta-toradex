@@ -71,7 +71,6 @@ IMAGE_INSTALL += " \
     nbench-byte \
     \
     ${IMAGE_INSTALL_MACHINE} \
-    trdx-config \
     \
     trdx-oak-sensors \
 "
