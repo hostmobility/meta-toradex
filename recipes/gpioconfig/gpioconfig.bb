@@ -14,6 +14,9 @@ SRC_URI += "file://GPIOConfig.png"
 
 PACKAGES = "${PN}"
 
+# Inhibit warnings about files being stripped.
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+
 # just don't do any configuring
 do_configure() {
 }
