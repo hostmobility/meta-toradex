@@ -14,7 +14,7 @@ diff -ur lxdm-0.4.1/data.orig//lxdm.conf lxdm-0.4.1/data/lxdm.conf
  
  ## greeter used to welcome the user
 -greeter=/usr/local/libexec/lxdm-greeter-gtk
-+greeter=/usr/libexec/lxdm-greeter-gtk
++greeter=/usr/lib/lxdm/lxdm-greeter-gtk
  
  [server]
  ## arg used to start xserver, not fully function
