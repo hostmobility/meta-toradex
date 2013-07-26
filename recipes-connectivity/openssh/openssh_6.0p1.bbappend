@@ -1,0 +1,10 @@
+PRINC := "${@int(PRINC) + 3}"
+PACKAGES =+ "${PN}-scp-dev ${PN}-sftp-dev ${PN}-sftp-server-dev"
+PACKAGES =+ "${PN}-scp-dbg ${PN}-sftp-dbg ${PN}-sftp-server-dbg"
+
+FILES_${PN}-scp-dev = ""
+FILES_${PN}-sftp-dev = ""
+FILES_${PN}-sftp-server-dev = ""
+FILES_${PN}-scp-dbg = "${bindir}/.debug/scp.${BPN}"
+FILES_${PN}-sftp-dbg = "${bindir}/.debug/sftp"
+FILES_${PN}-sftp-server-dbg = "${libexecdir}/.debug/sftp-server"
