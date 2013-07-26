@@ -36,15 +36,15 @@ do_install_prepend () {
 my_runconf() {
     cfgscript="./configure"
     if [ -x "$cfgscript" ] ; then
-        bbnote "Running $cfgscript --build=x86_64-linux --host=arm-angstrom-linux-gnueabi --target=arm-angstrom-linux-gnueabi --prefix=/usr --exec_prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --libexecdir=/usr/libexec --datadir=/usr/share 		  --sysconfdir=/etc 		  --sharedstatedir=/com 		  --localstatedir=/var 		  --libdir=/usr/lib 		  --includedir=/usr/include 		  --oldincludedir=/usr/include 		  --infodir=/usr/share/info --mandir=/usr/share/man --disable-silent-rules --disable-dependency-tracking --with-libtool-sysroot=/home/tegradev/oe-core/build/out-eglibc/sysroots/colibri-t20 $@"
+        bbnote "Running $cfgscript --build=${BUILD_SYS} --host=${HOST_SYS} --target=${TARGET_SYS} --prefix=${prefix} --exec_prefix=${exec_prefix} --bindir=${bindir} --sbindir=${sbindir} --libexecdir=${libexecdir} --datadir={datadir} --sysconfdir=${sysconfdir} --sharedstatedir=${sharedstatedir} --localstatedir=${localstatedir} --libdir=${libdir} --includedir=${includedir} --oldincludedir=${oldincludedir} --infodir=${infodir} --mandir=${mandir} --disable-silent-rules --disable-dependency-tracking --with-libtool-sysroot=/home/tegradev/oe-core/build/out-eglibc/sysroots/colibri-t20 $@"
         set +e
-        ${CACHED_CONFIGUREVARS} $cfgscript --build=x86_64-linux --host=arm-angstrom-linux-gnueabi --target=arm-angstrom-linux-gnueabi --prefix=/usr --exec_prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --libexecdir=/usr/libexec --datadir=/usr/share 		  --sysconfdir=/etc 		  --sharedstatedir=/com 		  --localstatedir=/var 		  --libdir=/usr/lib 		  --includedir=/usr/include --oldincludedir=/usr/include --infodir=/usr/share/info --mandir=/usr/share/man --disable-silent-rules --disable-dependency-tracking --with-libtool-sysroot=/home/tegradev/oe-core/build/out-eglibc/sysroots/colibri-t20 "$@"
-            if [ "$?" != "0" ]; then
-                echo "Configure failed. The contents of all config.log files follows to aid debugging"
-                find /home/tegradev/oe-core/build/out-eglibc/work/armv7ahf-vfp-angstrom-linux-gnueabi/mediainfo-0.7.62-r0/mediainfo-0.7.62 -name config.log -print -exec cat {} \;
-                bbfatal "oe_runconf failed"
-            fi
-            set -e
+        ${CACHED_CONFIGUREVARS} $cfgscript --build=${BUILD_SYS} --host=${HOST_SYS} --target=${TARGET_SYS} --prefix=${prefix} --exec_prefix=${exec_prefix} --bindir=${bindir} --sbindir=${sbindir} --libexecdir=${libexecdir} --datadir=${datadir} --sysconfdir=${sysconfdir} --sharedstatedir=${sharedstatedir} --localstatedir=${localstatedir} --libdir=${libdir} --includedir=${includedir} --oldincludedir=${oldincludedir} --infodir=${infodir} --mandir=${mandir} --disable-silent-rules --disable-dependency-tracking ${@append_libtool_sysroot(d)} $@
+        if [ "$?" != "0" ]; then
+            echo "Configure failed. The contents of all config.log files follows to aid debugging"
+            find /home/tegradev/oe-core/build/out-eglibc/work/armv7ahf-vfp-angstrom-linux-gnueabi/mediainfo-0.7.62-r0/mediainfo-0.7.62 -name config.log -print -exec cat {} \;
+            bbfatal "oe_runconf failed"
+        fi
+        set -e
     else
         bbfatal "no configure script found at $cfgscript"
     fi
