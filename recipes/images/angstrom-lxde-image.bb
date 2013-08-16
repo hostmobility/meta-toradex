@@ -4,7 +4,7 @@ DESCRIPTION = "Image based on the LXDE desktop"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=3f40d7994397109285ec7b81fdeb3b58"
 
-PV = "V2.0"
+PV = "V2.1"
 PR = "r5"
 
 #start of the resulting deployable tarball
@@ -32,7 +32,7 @@ IMAGE_LINGUAS = "en-us"
 # xorg-minimal-fonts xserver-xorg-multimedia-modules xserver-xorg-utils
 
 DISTRO_UPDATE_ALTERNATIVES ??= ""
-ROOTFS_PKGMANAGE_PKGS ?= '${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${ROOTFS_PKGMANAGE} ${DISTRO_UPDATE_ALTERNATIVES}", d)}'
+ROOTFS_PKGMANAGE_PKGS ?= '${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${ROOTFS_PKGMANAGE} ${DISTRO_UPDATE_ALTERNATIVES} update-alternatives-cworth", d)}'
 
 #CONMANPKGS = ""
 CONMANPKGS ?= "connman connman-plugin-loopback connman-plugin-ethernet connman-plugin-wifi connman-client connman-gnome"

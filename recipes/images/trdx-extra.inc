@@ -73,6 +73,7 @@ IMAGE_INSTALL += " \
     stress \
     lmbench \
     nbench-byte \
+    ethtool \
     \
     ${IMAGE_INSTALL_MACHINE} \
     \
