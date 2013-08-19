@@ -138,6 +138,7 @@ IMAGE_INSTALL += " \
 	gst-plugins-good-wavenc \
 	gst-plugins-good-wavparse \
 	gst-plugins-ugly-asf \
+	v4l-utils \
 	libpcre \
 	libpcreposix \
 	libxcomposite \
