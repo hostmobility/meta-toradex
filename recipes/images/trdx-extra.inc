@@ -23,6 +23,11 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
     canutils \
     lvds-ctrl \
     fs-init \
+    kernel-module-adv7180 \
+    kernel-module-max9526 \
+    kernel-module-tegra-v4l2-camera \
+    kernel-module-videobuf2-dma-nvmap \
+    kernel-module-videobuf2-memops \
 "
 
 
