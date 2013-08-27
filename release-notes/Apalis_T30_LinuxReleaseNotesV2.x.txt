@@ -12,6 +12,37 @@ Licensing:
 - customer required to obtain proper re-distribution license
 
 ********************************************************************************
+Linux Image V2.0 Beta 2 (August 19, 2013)
+This updates u-boot and kernel to cope with the increased eMMC and changed T30
+CPU SKU on Apalis T30 - 2GB V1.0C
+- U-Boot:
+  - eMMC and RAM size / offset detection
+  - rename shell prompt  colibri
+- Linux kernel:
+  - workaround limited CPU clock
+  - provision for the Analogue Camera Module
+  - v4l kernel drivers configured as kernel modules
+- rootfs / oe-core:
+  - update to latest git revision for kernel and u-boot
+  - image added relevant v4l kernel modules plus v4l-utils
+
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.0Beta2_20130819
+
+Known Issues:
+- We are in an early Beta state, not all functions are tested.
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- LVDS aka TFTLCD resolution hard-coded in kernel to full HD resolution, 
+  comments with timings for other resolutions provided
+- lxappearance is segfaulting upon start
+- connecting an analogue mic to the on module codec resets the codec, so that 
+  neither headphone out nor mic in works anymore. Workaround: Have mic 
+  connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+  the first few minutes until completed
+
+********************************************************************************
 Linux Image V2.0 Beta 1 (June 26, 2013)
 - U-Boot:
   - initial integration
@@ -187,4 +218,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, June 27, 2013
+Toradex, August 19, 2013
