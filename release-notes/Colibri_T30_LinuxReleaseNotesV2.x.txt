@@ -12,6 +12,37 @@ Licensing:
 - customer required to obtain proper re-distribution license
 
 ********************************************************************************
+Linux Image V2.0 Beta 3 (August 20, 2013)
+This updates u-boot and kernel to cope with the increased eMMC and changed T30
+CPU SKU on Colibri T30
+- U-Boot:
+  - eMMC and RAM size / offset detection
+  - rename shell prompt to Colibri T30
+- Linux kernel:
+  - workaround limited CPU clock
+  - provision for the Analogue Camera Module
+  - v4l kernel drivers configured as kernel modules
+- rootfs / oe-core:
+  - update to latest git revision for kernel and u-boot
+  - image added v4l-utils
+  - removed warning output from commandline tegrastats
+
+- sources git.toradex.com tag T30_LinuxImageV2.0Beta3_20130820
+
+Known Issues:
+- If a a monitor is connected to DVI, the kernel sometime hangs when the 
+  display controller DC1 is initialised. -> reboot required. 
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution, 
+  comments with timings for other resolutions provided
+- lxappearance is segfaulting upon start
+- connecting an analogue mic to the on module codec resets the codec, so that 
+  neither headphone out nor mic in works anymore. Workaround: Have mic 
+  connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+  the first few minutes until completed
+
+********************************************************************************
 Linux Image V2.0 Beta 2 (June 26, 2013)
 - U-Boot:
   - integrate NVIDIA partition table parsing incl. Toradex Colibri configuration block
@@ -157,7 +188,7 @@ Notes:
 - opkg package manager
 - HDMI: not all pixel clock frequencies allow for HDMI audio
 - CRT: the T30 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
-- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
+- Linux host used for recovery mode flashing requires proper 32-bit execution environment and awk (e.g. install ia32-libs on 64-bit Ubuntu)
 
 Working on latest image:
 - U-Boot boot loader
@@ -218,9 +249,9 @@ Not working or not tested:
   - Adobe Flash not provided by L4T (and probably never will)
   - opkg package feeds don't seem to be usable
 
-***********************************************
-eMMC Boot: Colibri T30 V1.1b and V1.1c (Sample)
-***********************************************
+*********************************************************
+eMMC Boot: Colibri T30 V1.1b, V1.1c and V1.1d (Sample)
+*********************************************************
 
 Initial Preparation:
 - download and extract T30_LinuxImageVx.yz.tar.bz2 package with root permissions
@@ -247,4 +278,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, June 27, 2013
+Toradex, August 20, 2013

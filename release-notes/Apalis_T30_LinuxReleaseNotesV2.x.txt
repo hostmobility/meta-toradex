@@ -14,10 +14,10 @@ Licensing:
 ********************************************************************************
 Linux Image V2.0 Beta 2 (August 19, 2013)
 This updates u-boot and kernel to cope with the increased eMMC and changed T30
-CPU SKU on Apalis T30 - 2GB V1.0C
+CPU SKU on Apalis T30 - 2GB V1.0c, Apalis T30 - 1GB V1.0a
 - U-Boot:
   - eMMC and RAM size / offset detection
-  - rename shell prompt  colibri
+  - rename shell prompt to Apalis T30
 - Linux kernel:
   - workaround limited CPU clock
   - provision for the Analogue Camera Module
@@ -26,7 +26,7 @@ CPU SKU on Apalis T30 - 2GB V1.0C
   - update to latest git revision for kernel and u-boot
   - image added relevant v4l kernel modules plus v4l-utils
 
-- sources git.toradex.com tag Apalis_T30_LinuxImageV2.0Beta2_20130819
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.0Beta2_20130816
 
 Known Issues:
 - We are in an early Beta state, not all functions are tested.
@@ -121,7 +121,7 @@ Notes:
 - opkg package manager
 - HDMI: not all pixel clock frequencies allow for HDMI audio
 - CRT: the T30 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
-- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
+- Linux host used for recovery mode flashing requires proper 32-bit execution environment and awk (e.g. install ia32-libs on 64-bit Ubuntu)
 
 Working on latest image:
 - U-Boot boot loader
@@ -143,7 +143,9 @@ Working on latest image:
   - 8-bit MMC card mmc1
   - 4-bit SD card mmc2
   - PWM LEDs /sys/class/leds/
-  - HDMI HDA audio
+  - HDMI 
+ audio
+  - HDA audio (on Eval Board V1.0a: check datasheet/schematics for patch instructions)
   - analog audio capture, playback and touch
     - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
     - touch has some jitter
@@ -179,7 +181,6 @@ Not working or not tested:
 - Linux kernel
   - analog input AD0 .. AD3 not implemented
   - watchdog
-  - HDA audio
   - IrDA
   - RS-422/485
   - SIM card
@@ -188,9 +189,10 @@ Not working or not tested:
   - opkg package feeds don't seem to be usable
   - GPIO config tool missing Apalis MXM3 pin description integration
 
-**********************************************
-eMMC Boot: Apalis T30 V1.0a and V1.0b (Sample)
-**********************************************
+*********************************************************
+eMMC Boot: Apalis T30 2GB V1.0a, V1.0b and V1.0c (Sample)
+eMMC Boot: Apalis T30 1GB V1.0a (Sample)
+*********************************************************
 
 Initial Preparation:
 - download and extract T30_LinuxImageVx.yz.tar.bz2 package with root permissions
