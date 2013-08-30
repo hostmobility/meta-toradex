@@ -17,7 +17,7 @@ Licensing:
 Notes:
 - 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoards, X13 on Iris) without any handshake
 - ext3 eMMC file systems
-- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
+- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu) and awk (e.g. install gawk on Ubuntu)
 
 Working:
 - eMMC flash boot
@@ -96,4 +96,4 @@ Boot from eMMC:
 - upon first boot emergency remount prepares cache and data partitions and reboots after 15 seconds
 - upon second boot Java classes are preloaded and cached which takes around 2 minutes, please be patient
 
-Toradex, April 8, 2013
+Toradex, August 30, 2013

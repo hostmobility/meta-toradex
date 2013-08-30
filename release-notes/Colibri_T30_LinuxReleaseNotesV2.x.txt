@@ -188,7 +188,7 @@ Notes:
 - opkg package manager
 - HDMI: not all pixel clock frequencies allow for HDMI audio
 - CRT: the T30 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
-- Linux host used for recovery mode flashing requires proper 32-bit execution environment and awk (e.g. install ia32-libs on 64-bit Ubuntu)
+- Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu) and awk (e.g. install gawk on Ubuntu)
 
 Working on latest image:
 - U-Boot boot loader
@@ -278,4 +278,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, August 20, 2013
+Toradex, August 30, 2013
