@@ -5,6 +5,8 @@ BURNFLASH := "${THISDIR}/files/${MACHINE}/burnflash.tar.bz2"
 S = "${WORKDIR}/burnflash"
 
 IMAGE_ROOTFS = "${WORKDIR}/${IMAGE_NAME}${PV}/rootfs"
+U_BOOT_EXT = "bin"
+U_BOOT_EXT_twr-vf65gs10 = "imx"
 
 do_rootfs_prepend() {
     tar -C ${WORKDIR} -xf ${BURNFLASH} 
@@ -19,8 +21,8 @@ do_rootfs_append() {
     mv ${IMAGE_ROOTFS}/../${MACHINE}_bin/uImage-${MACHINE}.bin ${IMAGE_ROOTFS}/../${MACHINE}_bin/uImage
 
     cp -pP ${DEPLOY_DIR_IMAGE}/u-boot* ${IMAGE_ROOTFS}/../${MACHINE}_bin/
-    rm -f ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot-hsmmc-${MACHINE}.bin
-    mv ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot-${MACHINE}.bin ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot.bin
+    rm -f ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot-hsmmc-${MACHINE}.${U_BOOT_EXT}
+    mv ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot-${MACHINE}.${U_BOOT_EXT} ${IMAGE_ROOTFS}/../${MACHINE}_bin/u-boot.${U_BOOT_EXT}
 
     # add the rootfs version to the welcome banner
     echo "${IMAGE_NAME}${PV}_${DATE}" >> ${IMAGE_ROOTFS}/etc/issue
