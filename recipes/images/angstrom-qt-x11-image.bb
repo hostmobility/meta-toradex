@@ -4,14 +4,15 @@ DESCRIPTION = "Image based on qt4-x11-free"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=3f40d7994397109285ec7b81fdeb3b58"
 
-PV = "V2.0"
+PV = "V2.1"
 PR = "r3"
 
 #start of the resulting deployable tarball name
-IMAGE_NAME_colibri-t20 = "T20_LinuxImage-qt"
-IMAGE_NAME_colibri-t30 = "T30_LinuxImage-qt"
+IMAGE_NAME_colibri-t20 = "Colibri_T20_LinuxImage-qt"
+IMAGE_NAME_colibri-t30 = "Colibri_T30_LinuxImage-qt"
 IMAGE_NAME_apalis-t30 = "ApalisT30_LinuxImage-qt"
 IMAGE_NAME_colibri-pxa = "PXA_LinuxImage-qt"
+IMAGE_NAME = "${MACHINE}_LinuxImage-qt"
 
 #create the deployment directory-tree
 require trdx-image-fstype.inc
@@ -34,7 +35,7 @@ CONMANPKGS_libc-uclibc = ""
 DEPENDS += "gst-plugins-good gst-plugins-bad gst-plugins-ugly"
 
 #deploy the OpenGL ES headers to the sysroot
-DEPENDS += "nvsamples"
+DEPENDS_tegra += "nvsamples"
 
 #build some ipk which are needed together with CAN, but do not yet install them
 DEPENDS += "canutils libsocketcan iproute2"
