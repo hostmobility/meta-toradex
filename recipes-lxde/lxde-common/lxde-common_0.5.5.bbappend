@@ -1,8 +1,10 @@
-PRINC = "6"
+PRINC = "7"
 WALLPAPER-MACHINE = "Wallpaper_Toradex.png"
 WALLPAPER-MACHINE_colibri-t20 = "Wallpaper_ColibriT20.png"
 WALLPAPER-MACHINE_colibri-t30 = "Wallpaper_ColibriT30.png"
 WALLPAPER-MACHINE_apalis-t30 = "Wallpaper_ApalisT30.png"
+WALLPAPER-MACHINE_colibri-vf50 = "Wallpaper_ColibriVF50.png"
+WALLPAPER-MACHINE_apalis-vf61 = "Wallpaper_ColibriVF61.png"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
