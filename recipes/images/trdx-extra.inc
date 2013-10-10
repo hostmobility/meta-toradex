@@ -1,7 +1,21 @@
 #additional packages to include in our Toradex images
 
+# Copy Licenses to image /usr/share/common-licenses, on tegra with individual licenses
+COPY_LIC_MANIFEST = "1"
+COPY_LIC_DIRS_tegra = "1"
+
+#build some ipk which are needed together with CAN, but do not yet install them
+DEPENDS += "canutils libsocketcan iproute2"
+
 #the following builds cross gdb and gdbserver
 DEPENDS += "gdb-cross"
+
+# angstrom and oe-core disagree on the format
+rootfs_update_timestamp_classic () {
+	date -u +%2m%2d%2H%2M%4Y >${IMAGE_ROOTFS}/etc/timestamp
+}
+#create the file /etc/timestamp
+IMAGE_PREPROCESS_COMMAND = "rootfs_update_timestamp_classic"
 
 IMAGE_INSTALL_T20_T30 = " \
     gpioconfig \
@@ -9,9 +23,22 @@ IMAGE_INSTALL_T20_T30 = " \
     trdx-nv-binaries \
     trdx-nv-binaries-nv-gstapps \
     trdx-nv-binaries-restricted-codecs \
+    usb-rndis-systemd \
+    \
+    curl \
+    file \
+    aspell \
 "
 
-IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30}"
+IMAGE_INSTALL_VF = " \
+    iproute2 \
+    canutils \
+    mtd-utils-ubifs \
+"
+
+IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30} \
+    u-boot-fw-utils \
+"
 
 IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30} \
     fs-init \
@@ -30,19 +57,20 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
     kernel-module-videobuf2-memops \
 "
 
+IMAGE_INSTALL_MACHINE_colibri-vf50 = "${IMAGE_INSTALL_VF}"
+
+IMAGE_INSTALL_MACHINE_colibri-vf61 = "${IMAGE_INSTALL_VF}"
 
 IMAGE_INSTALL_MACHINE = ""
 
 IMAGE_INSTALL += " \
     max9526-i2c \
     linux-firmware-ralink \
-    usb-rndis-systemd \
     \
     alsa-utils \
     alsa-utils-aplay \
     alsa-utils-amixer \
     \
-    aspell \
     consolekit \
     sqlite3 \
     \
