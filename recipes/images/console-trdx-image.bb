@@ -37,7 +37,8 @@ CONMANPKGS_libc-uclibc = ""
 BAD_RECOMMENDATIONS += " udev-hwdb "
 
 #this adds a few MB to the image
-IMAGE_INSTALL_T20_T30_tegra += "${XSERVER} xterm xclock"
+IMAGE_INSTALL_X11_tegra = "${XSERVER} xterm xclock"
+IMAGE_INSTALL_X11 = ""
 
 IMAGE_INSTALL += " \
     angstrom-packagegroup-boot \
@@ -47,7 +48,7 @@ IMAGE_INSTALL += " \
     ${ROOTFS_PKGMANAGE_PKGS} \
     timestamp-service \
     task-base-extended \
-    ${IMAGE_INSTALL_T20_T30} \
+    ${IMAGE_INSTALL_X11} \
 "
 
 
