@@ -11,7 +11,7 @@ fi
 
 if [ $FIRST_TIME -eq 1 ]; then
 	mkdir -p conf
-	cp ../stuff/meta-toradex/buildconf/*.conf
+	cp ../stuff/meta-toradex/buildconf/*.conf conf/
 
 	echo ""
 	$ECHO -e "\033[1mA sample conf/local.conf file has been created"
