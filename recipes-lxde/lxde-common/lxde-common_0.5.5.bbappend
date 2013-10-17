@@ -1,4 +1,4 @@
-PRINC = "7"
+PRINC = "8"
 WALLPAPER-MACHINE = "Wallpaper_Toradex.png"
 WALLPAPER-MACHINE_colibri-t20 = "Wallpaper_ColibriT20.png"
 WALLPAPER-MACHINE_colibri-t30 = "Wallpaper_ColibriT30.png"

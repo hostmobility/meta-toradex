@@ -1,0 +1,14 @@
+--- lxde-common-0.5.5/lxpanel/panel.in~	2011-07-29 16:04:03.000000000 +0200
++++ lxde-common-0.5.5/lxpanel/panel.in	2012-07-27 14:19:20.661190542 +0200
+@@ -53,7 +53,10 @@
+             id=pcmanfm.desktop
+         }
+         Button {
+-            id=firefox.desktop
++            id=midori.desktop
++        }
++        Button {
++            id=lxterminal.desktop
+         }
+     }
+ }
