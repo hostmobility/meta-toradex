@@ -24,6 +24,7 @@ IMAGE_INSTALL_T20_T30 = " \
     trdx-nv-binaries-nv-gstapps \
     trdx-nv-binaries-restricted-codecs \
     usb-rndis-systemd \
+    hdmi-hotplug \
     \
     curl \
     file \
