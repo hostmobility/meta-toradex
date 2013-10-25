@@ -5,11 +5,57 @@ Release Notes:  Linux Image V2.x for Apalis T30
 Contents:
 - U-Boot 2011.06 boot loader
 - Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r3
-- OpenEmbedded oe-core 2012.10 based root file system, using LXDE desktop environment
+- OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
 
 Licensing:
 - proprietary multimedia codecs included for evaluation purpose only
 - customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.1 Beta 1 (October 22, 2013)
+- U-Boot:
+  - Fix possible uninitialised array member issue in serial number to
+      hexadecimal coded decimal conversion routine (e.g. as used for
+      /proc/cpuinfo in Linux).
+  - Fix Linux USB OTG1 behaviour by not enabling USBO1_EN during
+      boot as USB host functionality on OTG1 port is anyway broken under U-Boot.
+- Linux kernel:
+  - Fix several HDMI hang issues.
+  - Exported Apalis GPIOs via SYSFS (see /sys/class/gpio).
+  - Support default watchdog API (see
+      http://developer.toradex.com/knowledge-base/watchdog-(linux)).
+  - Disable magic SysRq key configuration as this is not only a potential
+       security thread but can cause serious trouble if for some reason UART pins
+       are left floating and therefore cause unexpected break conditions.
+  - HDMI: Retry EDID reads up to 4 times until failing.
+
+- rootfs / oe-core:
+  - OpenEmbedded: layers updated to dylan
+      xserver update to version 1.14
+      gtk+ updated to 2.24.15
+      firefox update to 10.0.11esr
+      connman now has a command line tool, connmanctl
+      split the meta-lxde layer from oe-tworaz and serve it from
+        git.toradex.com
+  - NEON enabled build
+  - hdmi: add udev rule to start an X output on hotplug
+  - feed-config: use the new feed armv7ahf-vfp-neon
+  - evdev: backport V2.8.1 from dora to get a fix for multitouch events
+  - burnflash: script for configblock generation
+  - added packages: ethtool
+  - burnflash: add sanity checks
+
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.1Beta1_20131022
+
+Known Issues:
+- LVDS aka TFTLCD resolution hard-coded in kernel to full HD resolution, 
+    comments with timings for other resolutions provided
+- connecting an analogue mic to the on module codec resets the codec, so that 
+    neither headphone out nor mic in works anymore. Workaround: Have mic 
+    connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+    the first few minutes until completed
 
 ********************************************************************************
 Linux Image V2.0 Beta 2 (August 19, 2013)
@@ -115,7 +161,7 @@ Known Issues:
 
 ********************************************************************************
 Notes:
-- 115200 baud serial debug console on UARTA aka UART1 (EvalBoard lower X28 resp. X29 depending on JP10/12) without any handshake
+- 115200 baud serial debug console on UARTA aka UART1 (EvalBoard lower X28 resp. X29 depending on JP10/12, X22 on Ixora) without any handshake
 - user account: root with empty password
 - ext3 root file system
 - opkg package manager
@@ -126,14 +172,14 @@ Notes:
 Working on latest image:
 - U-Boot boot loader
   - environment storage in eMMC
-  - ASIX based USB to Ethernet adapters
+  - ASIX based USB to Ethernet adapters on USBH3
   - MMC/SD cards (only GPT partitioned)
   - eMMC flash with NVIDIA partition table parsing
   - serial console debug UARTA aka UART1
   - Toradex Apalis configuration block handling
-  - USB storage as host
+  - USB storage as host on USBH3
 - Linux kernel
-  - GPIOlib /sys/class/gpio (LVDS transmitter configuration)
+  - GPIOlib /sys/class/gpio
   - temperature sensor /sys/bus/i2c/devices/4-004c
   - RTC (Tegra internal, PMIC and board level I2C RTC)
   - Gigabit Ethernet eth0
@@ -143,8 +189,7 @@ Working on latest image:
   - 8-bit MMC card mmc1
   - 4-bit SD card mmc2
   - PWM LEDs /sys/class/leds/
-  - HDMI 
- audio
+  - HDMI HDA audio
   - HDA audio (on Eval Board V1.0a: check datasheet/schematics for patch instructions)
   - analog audio capture, playback and touch
     - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
@@ -153,6 +198,7 @@ Working on latest image:
   - framebuffer console
   - custom Ethernet MAC Address
   - serial number and board revision
+  - watchdog
   - USB host port
   - USB audio driver
   - USB webcam
@@ -162,7 +208,7 @@ Working on latest image:
   - suspend LP1
   - CAN via can0 and can1
   - PCIe (regular ports and mini-PCIe slot)
-  - SATA (regular port or mSATA slot
+  - SATA (regular port or mSATA slot)
   - DVFS power management
   - parallel camera interface
 - Linux user-space
@@ -178,9 +224,10 @@ Not working or not tested:
 - U-Boot boot loader
   - U-Boot USB keyboard
   - Gigabit Ethernet
+  - framebuffer support
+  - USB OTG1 and USBH2
 - Linux kernel
   - analog input AD0 .. AD3 not implemented
-  - watchdog
   - IrDA
   - RS-422/485
   - SIM card
@@ -190,34 +237,41 @@ Not working or not tested:
   - GPIO config tool missing Apalis MXM3 pin description integration
 
 *********************************************************
-eMMC Boot: Apalis T30 2GB V1.0a, V1.0b and V1.0c (Sample)
 eMMC Boot: Apalis T30 1GB V1.0a (Sample)
+eMMC Boot: Apalis T30 2GB V1.0a, V1.0b and V1.0c (Sample)
 *********************************************************
 
 Initial Preparation:
-- download and extract T30_LinuxImageVx.yz.tar.bz2 package with root permissions
+- download and extract Apalis_T30_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash eMMC:
 - EvalBoard V1.0a
   - connect USB micro A/B (X49) or USB B (X50) to development workstation using micro or regular USB cable
   - connect serial debug console to lower X28 or X29 using null modem RS-232 or regular USB cable
-  - enter recovery mode:
-    - Eboot (e.g. transitioning from WEC):
-      - 115200 baud without any handshake
-      - hold space key while applying power or resetting
-      - press x to enter command mode
-      - use 'reboot rcm' command
-    - U-Boot (e.g. updating Embedded Linux):
-      - 115200 baud without any handshake
-      - apply power or reset
-      - hit any key to stop auto booting
-      - use 'enterrcm' command
+- Ixora V1.0a
+  - connect USB micro A/B (X9) to development workstation using regular micro USB cable
+  - make sure JP2 is removed and nothing is connected to the lower USB host port X8
+  - optionally assemble resistor R90 instead of R91 so SW3 can be used as recovery mode switch
+  - for more information please consult Ixora datasheet section 3.3 and chapter 4
+- enter recovery mode:
+  - EvalBoard with Mezzanine press recovery mode SW2 while applying power
+  - Ixora press SW3 while applying power (requires R90 assembly option noted above)
+  - Eboot (e.g. transitioning from WEC):
+    - 115200 baud without any handshake
+    - hold space key while applying power or resetting
+    - press x to enter command mode
+    - use 'reboot rcm' command
+  - U-Boot (e.g. updating Embedded Linux):
+    - 115200 baud without any handshake
+    - apply power or reset
+    - hit any key to stop auto booting
+    - use 'enterrcm' command
   - for more information about recovery mode please consult Apalis T30 datasheet chapter 6
 - run update.sh script
 
 Boot from eMMC:
-- EvalBoard V1.0a
+- EvalBoard V1.0a or Ixora V1.0a
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, August 30, 2013
+Toradex, October 25, 2013

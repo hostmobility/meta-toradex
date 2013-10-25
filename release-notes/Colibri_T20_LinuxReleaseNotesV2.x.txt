@@ -4,12 +4,74 @@ Release Notes:  Linux Image V2.x for Colibri T20
 
 Contents:
 - U-Boot 2011.06 boot loader
-- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r2
-- OpenEmbedded oe-core 2012.10 based root file system, using LXDE desktop environment
+- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r3
+- OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
 
 Licensing:
 - proprietary multimedia codecs included for evaluation purpose only
 - customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.1 Beta 1 (October 22, 2013)
+- U-Boot:
+  - Fix possible uninitialised array member issue in serial number to
+      hexadecimal coded decimal conversion routine (e.g. as used for
+      /proc/cpuinfo in Linux).
+  - SD card boot offset detection
+  - rename shell prompt to Colibri T20
+  - decrease boot delay
+  - fix overflow in HCD conversion
+
+- Linux kernel:
+  - Support default watchdog API (see
+      http://developer.toradex.com/knowledge-base/watchdog-(linux)).
+  - Disable magic SysRq key configuration as this is not only a potential
+       security thread but can cause serious trouble if for some reason UART pins
+       are left floating and therefore cause unexpected break conditions.
+  - HDMI: Retry EDID reads up to 4 times until failing.
+  - provision for the Analogue Camera Module
+  - V4L2 kernel drivers configured as kernel modules
+  - allow easy integration of a custom Linux boot logo
+  - add TouchRev Fusion 10 aka CPT CLAA101NC05 display timings
+  - integrate TouchRev Fusion 7 and 10 multi-touch driver
+  - enable back key wake-up
+  - rename UARTs and PWM LEDs
+  - explicitly configure for 4-bit MMC/SD cards by default
+  - integrate MCP251x and SJA1000 CAN support
+  - fix Ethernet MAC address assignment after suspend
+  - add comment about GMI_ADV_N usage
+  - video4linux adv7180 and max9526 integration
+  - hack to avoid 24 Hz mode in X resulting in no display at all
+  - do not set PWM<A>, PWM<D> as GPIO, thus making PWM available
+
+- rootfs / oe-core:
+  - OpenEmbedded: layers updated to dylan
+      xserver update to version 1.14
+      gtk+ updated to 2.24.15
+      firefox update to 10.0.11esr
+      connman now has a command line tool, connmanctl
+      split the meta-lxde layer from oe-tworaz and serve it from
+        git.toradex.com
+  - hdmi: add udev rule to start an X output on hotplug
+  - evdev: backport V2.8.1 from dora to get a fix for multitouch events
+  - burnflash: script for configblock generation
+  - burnflash: change the Colibri image names to start with Colibri
+  - feed-config: no feeds for the T20 arch are available, so remove all URLs
+  - systemd-journald: limit journal size
+  - nv-binaries: update to L4T R16.3
+  - lxterminal: fix garbled titlebar
+  - added packages: florence, scrot, unclutter, gstreamer deinterlacer,
+                    v4l-utils, ethtool
+  - burnflash: fix race condition in genext3fs.sh (SD card boot)
+  - burnflash: add sanity checks
+  - burnflash: unified T20/T30 versions
+- sources git.toradex.com tag Colibri_T20_LinuxImageV2.1Beta1_20131022
+
+Known Issues:
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution, 
+    comments with timings for other resolutions provided
+- LP1 suspend might fail due to pending USB interrupts
+- LP1 suspend might hang due to display controller issue
 
 ********************************************************************************
 Linux Image V2.0 (March 07, 2013)
@@ -162,7 +224,7 @@ Known Issues:
 
 ********************************************************************************
 Notes:
-- 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoards, X13 on Iris) without any handshake
+- 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoards resp. X27 on V3.1a depending on JP17/19, X13 on Iris) without any handshake
 - user account: root with empty password
 - YAFFS2 flash root file system
 - opkg package manager
@@ -229,7 +291,7 @@ NAND Boot: Colibri T20 256MB V1.1b (Sample), Colibri T20 512MB V1.1c (Sample), C
 *****************************************************************************************************************************************************************************************
 
 Initial Preparation:
-- download and extract T20_LinuxImageVx.yz.tar.bz2 package
+- download and extract Colibri_T20_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash NAND:
 - EvalBoard V3.1a
@@ -268,7 +330,7 @@ Initial Preparation:
   - populate 100 ohm resistors R109, R111, R112 and R113 close to micro SD card holder (X10, see bottom assembly drawing fig.7 page 21 of Iris data sheet)
   - populate boot mode header (JP1)
   - insert micro SD card into micro SD card holder (X10)
-- download and extract T20_LinuxImageVx.yz.tar.bz2 package
+- download and extract Colibri_T20_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash SD Card:
 - EvalBoard V3.1a
@@ -291,4 +353,4 @@ Boot from SD Card:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, May 11, 2013
+Toradex, October 25, 2013

@@ -5,11 +5,56 @@ Release Notes:  Linux Image V2.x for Colibri T30
 Contents:
 - U-Boot 2011.06 boot loader
 - Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r3
-- OpenEmbedded oe-core 2012.10 based root file system, using LXDE desktop environment
+- OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
 
 Licensing:
 - proprietary multimedia codecs included for evaluation purpose only
 - customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.1 Beta 1 (October 22, 2013)
+- U-Boot:
+  - Fix possible uninitialised array member issue in serial number to
+      hexadecimal coded decimal conversion routine (e.g. as used for
+      /proc/cpuinfo in Linux).
+- Linux kernel:
+  - Fix several HDMI hang issues.
+  - Support default watchdog API (see
+      http://developer.toradex.com/knowledge-base/watchdog-(linux)).
+  - Disable magic SysRq key configuration as this is not only a potential
+       security thread but can cause serious trouble if for some reason UART pins
+       are left floating and therefore cause unexpected break conditions.
+  - Add DDR speed definition for 400 and 800 MHz.
+  - HDMI: Retry EDID reads up to 4 times until failing.
+
+- rootfs / oe-core:
+  - OpenEmbedded: layers updated to dylan
+      xserver update to version 1.14
+      gtk+ updated to 2.24.15
+      firefox update to 10.0.11esr
+      connman now has a command line tool, connmanctl
+      split the meta-lxde layer from oe-tworaz and serve it from
+        git.toradex.com
+  - NEON enabled build
+  - hdmi: add udev rule to start an X output on hotplug
+  - feed-config: use the new feed armv7ahf-vfp-neon
+  - evdev: backport V2.8.1 from dora to get a fix for multitouch events
+  - burnflash: script for configblock generation
+  - added packages: ethtool
+  - burnflash: change the Colibri image names to start with Colibri
+  - burnflash: add sanity checks
+
+- sources git.toradex.com tag Colibri_T30_LinuxImageV2.1Beta1_20131022
+
+Known Issues:
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution, 
+    comments with timings for other resolutions provided
+- connecting an analogue mic to the on module codec resets the codec, so that 
+    neither headphone out nor mic in works anymore. Workaround: Have mic 
+    connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+    the first few minutes until completed
 
 ********************************************************************************
 Linux Image V2.0 Beta 3 (August 20, 2013)
@@ -182,7 +227,7 @@ Known Issues:
 
 ********************************************************************************
 Notes:
-- 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoards, X13 on Iris) without any handshake
+- 115200 baud serial debug console on UARTA aka FFUART (lower X25 on EvalBoards resp. X27 on V3.1a depending on JP17/19, X13 on Iris) without any handshake
 - user account: root with empty password
 - ext3 root file system
 - opkg package manager
@@ -209,7 +254,6 @@ Working on latest image:
   - I2C via /dev/i2c-X
   - MMC/SD card, optional 8-bit SDHCI
   - PWM LEDs /sys/class/leds/
-  - HDMI SPDIF audio
   - analog audio capture, playback and touch
     - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
     - touch has some jitter
@@ -218,6 +262,7 @@ Working on latest image:
   - framebuffer console
   - custom Ethernet MAC Address
   - serial number and board revision
+  - watchdog
   - USB host port
   - USB audio driver
   - USB webcam
@@ -242,19 +287,19 @@ Not working or not tested:
   - TFTLCD framebuffer support
 - Linux kernel
   - analog input AD0 .. AD3 not implemented
-  - watchdog
+  - HDMI SPDIF audio broken
   - IrDA
   - RS-422/485
 - Linux user-space
   - Adobe Flash not provided by L4T (and probably never will)
   - opkg package feeds don't seem to be usable
 
-*********************************************************
-eMMC Boot: Colibri T30 V1.1b, V1.1c and V1.1d (Sample)
-*********************************************************
+*****************************************************
+eMMC Boot: Colibri T30 V1.1b, V1.1c or V1.1d (Sample)
+*****************************************************
 
 Initial Preparation:
-- download and extract T30_LinuxImageVx.yz.tar.bz2 package with root permissions
+- download and extract Colibri_T30_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash eMMC:
 - EvalBoard V3.1a
@@ -278,4 +323,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, August 30, 2013
+Toradex, October 25, 2013
