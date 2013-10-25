@@ -170,8 +170,8 @@ If the boot loader in NAND got corrupted this can also be used as a means of rec
 Initial Preparation:
 - EvalBoard V3.1a
   - select SD boot bootstrap option
-    - pull the following X8 pins down aka to ground with 10 k ohm resistors: 23 and 33
-    - pull the following X8 pins up aka to 3.3 volt with 10 k ohm resistors: 21, 27, 34 and 44
+    - pull the following X8 pins down aka to ground with 1 k ohm resistors: 23 and 33
+    - pull the following X8 pins up aka to 3.3 volt with 1 k ohm resistors: 21, 27, 34 and 44
 - download and extract Colibri_VF50_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash SD Card:
