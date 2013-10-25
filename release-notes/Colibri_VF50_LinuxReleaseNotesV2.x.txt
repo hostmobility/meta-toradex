@@ -1,0 +1,188 @@
+*************************************************
+Release Notes:  Linux Image V2.x for Colibri VF50
+*************************************************
+
+Contents:
+- U-Boot 2011.12 boot loader
+- Linux 3.0.15 kernel, based on Freescale TWR-VF65GS10 Timesys LinuxLink 2013-07-29
+- OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
+
+********************************************************************************
+Linux Image V2.1 Beta 1 (October 22, 2013)
+- U-Boot:
+  - Fix long standing boot hang issue introduced by Freescale's Vybrid 1.1 silicon.
+  - Fix possible uninitialised array member issue in serial number to
+      hexadecimal coded decimal conversion routine (e.g. as used for
+      /proc/cpuinfo in Linux).
+  - Migrate default NAND vs. SD card boot configuration (in-line with Colibri T20)
+  - Integrate config block handling
+  - Increase the available space for the U-Boot binary to half a megabyte by booting from gfxRAM rather than sysRAM0.
+  - Initial support based off Timesys' implementation for Freescale's Vybrid Tower System TWR-VF65GS10:
+    - New machine ID.
+    - Default UART_A on SCI0.
+    - ESDHC2 only.
+    - 8-bit NAND.
+    - No quad SPI.
+    - FEC1 only.
+    - Enabled command line editing.
+    - PLL5 based RMII clocking (e.g. no external crystal).
+    - UART_A, UART_B and UART_C I/O muxing.
+- Linux kernel:
+  - Hackish USBH_PEN implementation.
+  - Setup memory if mem= is not passed to kernel.
+  - Enable RTS/CTS on UART_A aka UART0 and UART_B aka UART2.
+  - Integrate backlight using both BL_ON GPIO and PWM<A>.
+  - Re-worked IOMUX pin muxing.
+  - Disable magic SysRq key configuration as this is not only a potential
+       security thread but can cause serious trouble if for some reason UART pins
+       are left floating and therefore cause unexpected break conditions.
+  - Decrease DMA zone size configuration.
+  - Enable tmpfs POSIX ACL configuration.
+  - Re-enable L2 cache kernel configuration as it is now only enabled if actually present on chip.
+  - Implement resistive touch screen driver using ADCs and GPIOs.
+  - Add Eon Silicon Solutions manufacturer ID and integrate mxc_nand platform data handling.
+  - Disable NAND controller software ECC in order to use hardware ECC.
+  - Enable ADC driver as well as debugfs file system.
+  - Fix DCU clock rounding, set DCU clock to 150.7 MHz, increase display pin drive strength and
+      configure DCU for VESA VGA with a 30 MHz pixel clock
+  - Enable CPU idle, NEON, ASRC and printk time.
+  - Initial support based off Timesys' implementation for Freescale's Vybrid Tower System TWR-VF65GS10:
+    - New machine ID.
+    - FEC1 only.
+    - ESDHC2 only with card detect interrupt.
+    - PLL5 based RMII clocking (e.g. no external crystal).
+    - VESA VGA display timing (tested with 5.7" EDT ET057090DHU).
+    - Default UART_A on SCI0.
+    - UART_A and UART_C I/O muxing.
+    - I2C real time clock on carrier board.
+    - Early boot console support.
+    - 8-bit NAND.
+- rootfs / oe-core:
+  - OpenEmbedded: layers from dylan
+      xserver version 1.14
+      gtk+ 2.24.15
+      midori 0.5.0
+  - NEON and hard float enabled build
+  - feed-config: use the new feed armv7ahf-vfp-neon
+  - evdev: backport V2.8.1 from dora to get a fix for multitouch events
+  - browser: use midori
+  - burnflash: script for configblock generation
+  - systemd-journald: limit journal size
+- sources git.toradex.com linux/u-boot branches colibri_vf tag Colibri_VF50_LinuxImageV2.1Beta1_20131022
+
+Known Issues:
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution.
+
+********************************************************************************
+Notes:
+- 115200 baud serial debug console on UART0 aka FFUART (lower X25 on EvalBoards resp. X27 on V3.1a depending on JP17/19, X13 on Iris) without any handshake
+- user account: root with empty password
+- UBIFS flash root file system
+- opkg package manager
+- Linux host used for update preparation requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu) and awk (e.g. install gawk on Ubuntu)
+
+Working:
+- U-Boot boot loader
+  - environment storage in NAND flash or on MMC/SD card
+  - Ethernet
+  - MMC/SD cards
+  - serial console debug UART0
+  - Toradex Colibri configuration block handling
+- Linux kernel
+  - GPIOlib /sys/class/gpio
+  - RTC (board level I2C RTC)
+  - Ethernet eth0
+  - NAND flash MTD UBIFS
+  - serial console debug UART0
+  - I2C via /dev/i2c-X
+  - MMC/SD card ESDHC2
+  - resistive touch
+  - framebuffer console
+  - custom Ethernet MAC Address
+  - serial number and board revision
+  - USB host port
+- Linux user-space
+  - graphics (DCU aka parallel RGB)
+  - Midori browser
+  - LXDE
+
+Not working or not tested:
+- U-Boot boot loader
+  - USB keyboard
+  - USB storage as host
+  - framebuffer support
+- Linux kernel
+  - analog inputs and temperature sensor
+  - RTC (Vybrid internal)
+  - high speed serial UART1 and UART2
+  - PWM LEDs /sys/class/leds/
+  - SPI via /dev/spidev0.0
+  - USB audio driver
+  - USB webcam
+  - USB raw HID device /dev/hidrawX
+  - USB device Ethernet RNDIS
+  - automatic USB device/host detection aka OTG support
+  - power management
+  - optional parallel camera interface
+  - watchdog
+  - IrDA
+  - RS-422/485
+- Linux user-space
+  - GPIO config tool
+
+**************************************
+NAND Boot: Colibri VF50 V1.0a (Sample)
+**************************************
+
+If the boot loader in NAND got corrupted SD card boot as described further down can be used as a means of recovery.
+
+Initial Preparation:
+- download and extract Colibri_VF50_LinuxImageVx.yz.tar.bz2 package with root permissions
+- use any VFAT formatted SD resp. uSD card with at least 100 MB of free space
+- optionally format the SD resp. uSD card using the format_sd.sh script (warning everything will be erased)
+- run update.sh script with optional -o argument pointing to mount point of above mentioned card
+
+Flash NAND:
+- EvalBoard V3.1a
+  - 115200 baud serial debug console on UART0 aka FFUART (lower X25 resp. X27 depending on JP17/19) without any handshake
+  - insert above prepared SD card into SD card/MMC SDIO-socket (X15)
+- Iris V1.1a
+  - 115200 baud serial debug console on UART0 aka FFUART (X13) without any handshake
+  - insert above prepared uSD card into uSD card holder (X10)
+  - apply power or reset
+  - hit any key to stop auto booting
+  - use 'mmc part 0 ; fatload mmc 0:1 $loadaddr flash_mmc.img ;source' commands
+  - use 'run update' command
+
+Boot from NAND:
+- EvalBoard V3.1a or Iris V1.1a
+- above given update command should automatically perform a soft re-boot upon successful completion
+- optionally power cycle
+- upon first boot post-install scripts are run which takes around 2 minutes, please be patient
+
+
+*****************************************
+SD Card Boot: Colibri VF50 V1.0a (Sample)
+*****************************************
+
+If the boot loader in NAND got corrupted this can also be used as a means of recovery.
+
+Initial Preparation:
+- EvalBoard V3.1a
+  - select SD boot bootstrap option
+    - pull the following X8 pins down aka to ground with 10 k ohm resistors: 23 and 33
+    - pull the following X8 pins up aka to 3.3 volt with 10 k ohm resistors: 21, 27, 34 and 44
+- download and extract Colibri_VF50_LinuxImageVx.yz.tar.bz2 package with root permissions
+
+Flash SD Card:
+- use any SD resp. uSD card of at least 100 MB capacity
+- format and flash SD resp. uSD card using format_sd.sh script giving -d argument pointing to
+    device file of SD card and -f argument (warning everything will be erased)
+
+Boot from SD Card:
+- EvalBoard V3.1a
+  - insert SD card into SD card/MMC SDIO-socket (X15)
+- apply power or reset
+- upon first boot post-install scripts are run which takes around 2 minutes, please be patient
+
+Toradex, October 25, 2013
