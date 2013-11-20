@@ -12,8 +12,7 @@ IMAGE_NAME_colibri-t20 = "Colibri_T20_LinuxConsoleImage"
 IMAGE_NAME_colibri-t30 = "Colibri_T30_LinuxConsoleImage"
 IMAGE_NAME_apalis-t30 = "Apalis_T30_LinuxConsoleImage"
 IMAGE_NAME_colibri-pxa = "Colibri_PXA_LinuxConsoleImage"
-IMAGE_NAME_colibri-vf50 = "Colibri_VF50_LinuxConsoleImage"
-IMAGE_NAME_colibri-vf61 = "Colibri_VF61_LinuxConsoleImage"
+IMAGE_NAME_colibri-vf = "Colibri_VF_LinuxConsoleImage"
 IMAGE_NAME = "${MACHINE}_LinuxConsoleImage"
 
 #create the deployment directory-tree

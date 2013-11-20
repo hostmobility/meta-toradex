@@ -12,8 +12,7 @@ IMAGE_NAME_colibri-t20 = "Colibri_T20_LinuxImage"
 IMAGE_NAME_colibri-t30 = "Colibri_T30_LinuxImage"
 IMAGE_NAME_apalis-t30 = "Apalis_T30_LinuxImage"
 IMAGE_NAME_colibri-pxa = "Colibri_PXA_LinuxImage"
-IMAGE_NAME_colibri-vf50 = "Colibri_VF50_LinuxImage"
-IMAGE_NAME_colibri-vf61 = "Colibri_VF61_LinuxImage"
+IMAGE_NAME_colibri-vf = "Colibri_VF_LinuxImage"
 IMAGE_NAME = "${MACHINE}_LinuxImage"
 
 #create the deployment directory-tree
@@ -39,7 +38,7 @@ DEPENDS_tegra += "nvsamples"
 
 IMAGE_BROWSER = "firefox"
 #keep the rootfs size small
-IMAGE_BROWSER_colibri-vf50 = "midori"
+IMAGE_BROWSER_colibri-vf = "midori"
 
 # this recommends from midori pulls in 8Meg of icons
 BAD_RECOMMENDATIONS += " gnome-icon-theme "
@@ -82,7 +81,7 @@ GSTREAMER = " \
     gst-plugins-good-wavparse \
     gst-plugins-ugly-asf \
 "
-GSTREAMER_colibri-vf50 = ""
+GSTREAMER_colibri-vf = ""
 
 IMAGE_INSTALL += " \
     gconf \

@@ -9,8 +9,7 @@ PR = "r0"
 
 #start of the resulting deployable tarball name
 IMAGE_NAME_colibri-pxa = "Colibri_PXA_LinuxImage-qte"
-IMAGE_NAME_colibri-vf50 = "Colibri_VF50_LinuxImage-qte"
-IMAGE_NAME_colibri-vf61 = "Colibri_VF61_LinuxImage-qte"
+IMAGE_NAME_colibri-vf = "Colibri_VF_LinuxImage-qte"
 IMAGE_NAME = "${MACHINE}_LinuxImage-qte"
 
 #create the deployment directory-tree

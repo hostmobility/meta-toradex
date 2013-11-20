@@ -58,9 +58,7 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
     kernel-module-videobuf2-memops \
 "
 
-IMAGE_INSTALL_MACHINE_colibri-vf50 = "${IMAGE_INSTALL_VF}"
-
-IMAGE_INSTALL_MACHINE_colibri-vf61 = "${IMAGE_INSTALL_VF}"
+IMAGE_INSTALL_MACHINE_colibri-vf = "${IMAGE_INSTALL_VF}"
 
 IMAGE_INSTALL_MACHINE = ""
 

@@ -6,7 +6,7 @@ S = "${WORKDIR}/burnflash"
 
 IMAGE_ROOTFS = "${WORKDIR}/${IMAGE_NAME}${PV}/rootfs"
 U_BOOT_EXT = "bin"
-U_BOOT_EXT_colibri-vf50 = "imx"
+U_BOOT_EXT_colibri-vf = "imx"
 
 do_rootfs_prepend() {
     tar -C ${WORKDIR} -xf ${BURNFLASH} 
@@ -15,9 +15,9 @@ do_rootfs_prepend() {
 }
 
 #we need the native ubi tools for machines using ubifs
-DEPENDS_colibri-vf50 = "mtd-utils-native"
+DEPENDS_colibri-vf = "mtd-utils-native"
 CP_MKUBIFS=""
-CP_MKUBIFS_colibri-vf50="MKUBIFS=`which mkfs.ubifs` ; mkdir ${IMAGE_ROOTFS}/../vf_flash/ ; cp ${MKUBIFS} ${IMAGE_ROOTFS}/../vf_flash/ ; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/mkfs.ubifs"
+CP_MKUBIFS_colibri-vf="MKUBIFS=`which mkfs.ubifs` ; mkdir ${IMAGE_ROOTFS}/../vf_flash/ ; cp ${MKUBIFS} ${IMAGE_ROOTFS}/../vf_flash/ ; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/mkfs.ubifs"
 
 do_rootfs_append() {
     # put u-boot, kernel into the bin directories, remove the kernel from the rootfs/boot
