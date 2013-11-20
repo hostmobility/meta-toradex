@@ -35,6 +35,7 @@ BAD_RECOMMENDATIONS += " ${BAD_RECOMMENDATIONS_VF} "
 
 IMAGE_INSTALL += " \
     packagegroup-core-qt4e \
+    libicui18n \
     xdg-utils \
     \
     initscripts \
