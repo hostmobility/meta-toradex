@@ -2,4 +2,4 @@ PRINC = "1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/qt4:"
 
-QT_CONFIG_FLAGS += " -depths generic"
+QT_CONFIG_FLAGS += " -depths all"
