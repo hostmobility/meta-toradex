@@ -31,26 +31,25 @@ IMAGE_INSTALL_T20_T30 = " \
     aspell \
 "
 
-IMAGE_INSTALL_VF = " \
-    iproute2 \
-    canutils \
-    mtd-utils-ubifs \
-"
-
-IMAGE_INSTALL_MACHINE_colibri-t20 = "${IMAGE_INSTALL_T20_T30} \
+IMAGE_INSTALL_MACHINE_colibri-t20 = " \
+    ${IMAGE_INSTALL_T20_T30} \
     u-boot-fw-utils \
 "
 
-IMAGE_INSTALL_MACHINE_colibri-t30 = "${IMAGE_INSTALL_T20_T30} \
+IMAGE_INSTALL_MACHINE_colibri-t30 = " \
+    ${IMAGE_INSTALL_T20_T30} \
     fs-init \
+    util-linux-fstrim \
 "
 
-IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
+IMAGE_INSTALL_MACHINE_apalis-t30 = " \
+    ${IMAGE_INSTALL_T20_T30} \
     pciutils \
     iproute2 \
     canutils \
     lvds-ctrl \
     fs-init \
+    util-linux-fstrim \
     kernel-module-adv7180 \
     kernel-module-max9526 \
     kernel-module-tegra-v4l2-camera \
@@ -58,7 +57,11 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = "${IMAGE_INSTALL_T20_T30} \
     kernel-module-videobuf2-memops \
 "
 
-IMAGE_INSTALL_MACHINE_colibri-vf = "${IMAGE_INSTALL_VF}"
+IMAGE_INSTALL_MACHINE_colibri-vf = " \
+    iproute2 \
+    canutils \
+    mtd-utils-ubifs \
+"
 
 IMAGE_INSTALL_MACHINE = ""
 
