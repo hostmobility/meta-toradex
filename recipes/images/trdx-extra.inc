@@ -34,12 +34,14 @@ IMAGE_INSTALL_T20_T30 = " \
 IMAGE_INSTALL_MACHINE_colibri-t20 = " \
     ${IMAGE_INSTALL_T20_T30} \
     u-boot-fw-utils \
+    kernel-module-fusion-f0710a \
 "
 
 IMAGE_INSTALL_MACHINE_colibri-t30 = " \
     ${IMAGE_INSTALL_T20_T30} \
     fs-init \
     util-linux-fstrim \
+    kernel-module-fusion-f0710a \
 "
 
 IMAGE_INSTALL_MACHINE_apalis-t30 = " \
@@ -55,12 +57,14 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = " \
     kernel-module-tegra-v4l2-camera \
     kernel-module-videobuf2-dma-nvmap \
     kernel-module-videobuf2-memops \
+    kernel-module-fusion-f0710a \
 "
 
 IMAGE_INSTALL_MACHINE_colibri-vf = " \
     iproute2 \
     canutils \
     mtd-utils-ubifs \
+    kernel-module-fusion-f0710a \
 "
 
 IMAGE_INSTALL_MACHINE = ""
