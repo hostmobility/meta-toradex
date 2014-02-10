@@ -12,6 +12,58 @@ Licensing:
 - customer required to obtain proper re-distribution license
 
 ********************************************************************************
+Linux Image V2.1 Beta 2 (February 6, 2014)
+- U-Boot:
+  - Add more UART configurations to the device trees allowing easy switching of
+    the console UART port by changing the UART base address of the console node
+    within the device tree.
+  - Fix EHCI periodic list handling.
+  - Add default VESA VGA vidargs for our now modedb enabled kernel. This allows
+    easy specifying an alternate parallel RGB resolution.
+  - Fix usbboot option to be more in-line with how we do optional MMC/SD card
+    boot on Colibri VF50/VF61. Loads the uimage kernel from the first partition
+    being formatted as VFAT and instructs the kernel to mount the second
+    partition formatted as ext3 as root file system.
+- Linux kernel:
+  - Use TPS6591X IRQ base define to calculate correct IRQ number.
+  - Remove vdd_hdmi_con regulator from dc1 since we don't have a dedicated
+    regulator for this connector on our baseboards.
+  - Fix SATA suspend/resume by adding avdd_plle regulator.
+  - Fix HDMI suspend/resume by avoiding division by zero oops.
+  - Add GPIO keyboard configuration.
+  - Use integer for root_bus_nr in Tegra PCIe driver.
+  - Add STMPE ADC driver using IIO framework
+    (see http://developer.toradex.com/knowledge-base/adc-(linux)).
+  - Use modedb to specify framebuffer resolution (see
+    http://developer.toradex.com/knowledge-base/framebuffer-(linux) and
+    http://developer.toradex.com/knowledge-base/x-server-(linux)).
+  - Check null pointers for sysfs calls.
+  - Hack to avoid 24 Hz mode in X resulting in no display at all. This has been
+    encountered using e.g. a Samsung SyncMaster F2380 if connected by HDMI.
+  - Add kernel parameters to change RGB clock polarity.
+  - Re-work Fusion multi-touch touchscreen driver.
+  - Before updating modes on HDMI hotplug, check if framebuffer is registered
+    at all. This allows to disable framebuffers completely.
+- rootfs / oe-core:
+  - Fix build and texinfo errors for stress.
+  - Add sections for both monitor outputs to xorg.conf. Add example
+    configuration to disable an output as well as select preferred mode.
+  - Add entry for fusion touchscreen driver to xorg.conf.
+  - Add fstrim from util-linux.
+  - Add kernel module for fusion touch screens (see
+    http://developer.toradex.com/knowledge-base/capacitive-multi-touch-display-(linux)).
+  - burnflash: Account for fs overhead and many files.
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.1Beta2_20140206
+
+Known Issues:
+- connecting an analogue mic to the on module codec resets the codec, so that 
+    neither headphone out nor mic in works anymore. Workaround: Have mic 
+    connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+    the first few minutes until completed
+
+********************************************************************************
 Linux Image V2.1 Beta 1 (October 22, 2013)
 - U-Boot:
   - Fix possible uninitialised array member issue in serial number to
@@ -205,7 +257,8 @@ Working on latest image:
   - USB raw HID device /dev/hidrawX
   - USB device Ethernet RNDIS, provided by Android gadget
   - automatic USB device/host/suspend detection aka full OTG support
-  - suspend LP1
+  - analog input
+ - suspend LP1
   - CAN via can0 and can1
   - PCIe (regular ports and mini-PCIe slot)
   - SATA (regular port or mSATA slot)
@@ -227,7 +280,6 @@ Not working or not tested:
   - framebuffer support
   - USB OTG1 and USBH2
 - Linux kernel
-  - analog input AD0 .. AD3 not implemented
   - IrDA
   - RS-422/485
   - SIM card
@@ -274,4 +326,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, October 25, 2013
+Toradex, February 10, 2014

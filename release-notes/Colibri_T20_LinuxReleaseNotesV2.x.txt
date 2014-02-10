@@ -12,6 +12,45 @@ Licensing:
 - customer required to obtain proper re-distribution license
 
 ********************************************************************************
+Linux Image V2.1 Beta 2 (February 7, 2014)
+- U-Boot:
+  - Fix EHCI periodic list handling.
+  - Add default VESA VGA vidargs for our now modedb enabled kernel. This allows
+    easy specifying an alternate parallel RGB resolution.
+  - Fix usbboot option to be more in-line with how we do optional MMC/SD card
+    boot on Colibri VF50/VF61. Loads the uimage kernel from the first partition
+    being formatted as VFAT and instructs the kernel to mount the second
+    partition formatted as ext3 as root file system.
+  - Hack backlight GPIO by manually untristating respective pinmux group.
+- Linux kernel:
+  - Fix AC97 device registration.
+  - Fix HDMI suspend/resume by avoiding division by zero oops.
+  - Don't register KEY_BACK for wakeup.
+  - Fix voltage regulator table for TPS658643.
+  - Use modedb to specify framebuffer resolution
+    (see http://developer.toradex.com/knowledge-base/framebuffer-(linux) and
+    http://developer.toradex.com/knowledge-base/x-server-(linux)).
+  - Check null pointers for sysfs calls.
+  - Add kernel parameters to change RGB clock polarity.
+  - Re-work Fusion multi-touch touchscreen driver.
+  - Before updating modes on HDMI hotplug, check if framebuffer is registered
+    at all. This allows to disable framebuffers completely.
+- rootfs / oe-core:
+  - Fix build and texinfo errors for stress.
+  - Add sections for both monitor outputs to xorg.conf. Add example
+    configuration to disable an output as well as select preferred mode.
+  - Add entry for fusion touchscreen driver to xorg.conf.
+  - Add kernel module for fusion touch screens (see
+    http://developer.toradex.com/knowledge-base/capacitive-multi-touch-display-(linux)).
+  - burnflash: Account for fs overhead and many files.
+- sources git.toradex.com tag Colibri_T20_LinuxImageV2.1Beta2_20140207
+
+Known Issues:
+- inoperable 24 Hz HDMI refresh rate may be chosen by EDID
+- LP1 suspend might fail due to pending USB interrupts
+- LP1 suspend might hang due to display controller issue
+
+********************************************************************************
 Linux Image V2.1 Beta 1 (October 22, 2013)
 - U-Boot:
   - Fix possible uninitialised array member issue in serial number to
@@ -21,7 +60,6 @@ Linux Image V2.1 Beta 1 (October 22, 2013)
   - rename shell prompt to Colibri T20
   - decrease boot delay
   - fix overflow in HCD conversion
-
 - Linux kernel:
   - Support default watchdog API (see
       http://developer.toradex.com/knowledge-base/watchdog-(linux)).
@@ -43,7 +81,6 @@ Linux Image V2.1 Beta 1 (October 22, 2013)
   - video4linux adv7180 and max9526 integration
   - hack to avoid 24 Hz mode in X resulting in no display at all
   - do not set PWM<A>, PWM<D> as GPIO, thus making PWM available
-
 - rootfs / oe-core:
   - OpenEmbedded: layers updated to dylan
       xserver update to version 1.14
@@ -171,7 +208,7 @@ Linux Image V2.0 Alpha 2 (October 19, 2012)
 - update to L4T R16, !!!THIS REQUIRED TO CHANGE THE CALLING CONVENTION TO HARD FLOAT!!!
 - U-Boot:
   - use a generic approach to get the MTD partitions to ease changes to the partition layout
-    (Initial partition table parsing courtesy of Mitja Špes from LXNAV)
+    (Initial partition table parsing courtesy of Mitja \8Apes from LXNAV)
   - increase kernel partition size to 8 MB
   - move the init output from the framebuffer console to the serial output
 - Linux kernel:
@@ -232,7 +269,7 @@ Notes:
 - CRT: The T20 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
 - Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
 
-Working:
+Working on latest image:
 - U-Boot boot loader
   - environment storage in NAND flash or on MMC/SD card
   - Ethernet
@@ -353,4 +390,4 @@ Boot from SD Card:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, October 25, 2013
+Toradex, February 10, 2014
