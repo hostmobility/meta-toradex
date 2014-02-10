@@ -95,6 +95,7 @@ IMAGE_INSTALL += " \
     initscripts \
     libgsf \
     polkit-gnome \
+    pam-plugin-ck-connector \
     libwnck \
     libxres \
     makedevs \

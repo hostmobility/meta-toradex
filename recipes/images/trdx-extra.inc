@@ -85,7 +85,6 @@ IMAGE_INSTALL += " \
     nfs-utils-client \
     openssh-scp \
     openssh-sftp \
-    pam-plugin-ck-connector \
     \
     bzip2 \
     gdbserver \
