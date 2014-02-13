@@ -258,7 +258,6 @@ Working on latest image:
   - USB device Ethernet RNDIS, provided by Android gadget
   - automatic USB device/host/suspend detection aka full OTG support
   - analog input
- - suspend LP1
   - CAN via can0 and can1
   - PCIe (regular ports and mini-PCIe slot)
   - SATA (regular port or mSATA slot)
@@ -283,6 +282,7 @@ Not working or not tested:
   - IrDA
   - RS-422/485
   - SIM card
+  - suspend LP1 (igb/PCIe failing)
 - Linux user-space
   - Adobe Flash not provided by L4T (and probably never will)
   - opkg package feeds don't seem to be usable
@@ -326,4 +326,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, February 10, 2014
+Toradex, February 13, 2014
