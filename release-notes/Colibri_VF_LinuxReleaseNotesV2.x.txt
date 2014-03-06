@@ -1,11 +1,51 @@
-*************************************************
-Release Notes:  Linux Image V2.x for Colibri VF50
-*************************************************
+******************************************************
+Release Notes:  Linux Image V2.x for Colibri VF50/VF61
+******************************************************
 
 Contents:
 - U-Boot 2011.12 boot loader
 - Linux 3.0.15 kernel, based on Freescale TWR-VF65GS10 Timesys LinuxLink 2013-07-29
 - OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
+
+********************************************************************************
+Linux Image V2.1 Beta 2 (November 29, 2013)
+- U-Boot:
+  - Add initial Colibri VF61 support.
+  - Implement memory size auto detection.
+  - Implement module type (e.g. VF50 vs. VF61) auto detection based on L2 cache availability.
+  - Set specific ARM core clock (e.g. 400 vs. 500 MHz) as well as Linux machine id number.
+  - Rename configuration to colibri_vf to be universally used for Colibri VF50 as well as VF61.
+- Linux kernel:
+  - Various ADC resp. VF50 touch improvements/fixes.
+  - Implement internal temperature sensor exposed via /sys/class/hwmon/hwmon0/device/temp1_input.
+  - Fix VESA VGA display timing.
+  - Use 16 bpp framebuffer by default to avoid buffer underruns.
+  - Add the following additional display timings for manual activation:
+    - 800x480@60 (e.g. EDT ET070080DH6)
+    - 800x600@60
+    - 1024x600@60 (e.g. TouchRevolution Fusion 10)
+    - 1024x768@60
+  - Allow for 396 as well as 500 MHz A5 core frequency.
+  - Add the Colibri VF61 machine id and its corresponding machine definition.
+  - Rename configuration to colibri_vf to be universally used for Colibri VF50 as well as VF61.
+  - Enable watchdog configuration.
+  - Fix Freescale's magic daisy chain aka select input IOMUX stuff.
+  - Fix pixel clock polarity.
+- rootfs / oe-core:
+  - Use branch 'LinuxImageV2.1' in toradex-bsp-platform.git 
+  - Fix recipe to follow the changed khronos headers checksum
+  - Rename machine to colibri-vf to be universally used for Colibri VF50 as well as VF61
+  - Unify files for use with VF50/VF61 or add VF61 specific ones
+  - Don't statically populate /dev. The VFxx console fails on this.
+  - Improve the console and qt4e image recipe
+
+- sources git.toradex.com linux/u-boot branches colibri_vf tag Colibri_VF_LinuxImageV2.1Beta2_20131129
+
+Known Issues:
+- If the module does not boot remove all displays connected to HSYNC, VSYNC and reset.
+  (This has been observed on an Evaluation Board V2.1)
+- LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution.
+- Resistive touch and analog audio are not working on a Colibri VF61
 
 ********************************************************************************
 Linux Image V2.1 Beta 1 (October 22, 2013)
@@ -86,10 +126,13 @@ Working:
   - environment storage in NAND flash or on MMC/SD card
   - Ethernet
   - MMC/SD cards
+  - RAM size auto detection
   - serial console debug UART0
   - Toradex Colibri configuration block handling
+  - module type auto detection
 - Linux kernel
   - GPIOlib /sys/class/gpio
+  - temperature sensor /sys/class/hwmon/hwmon0/device/temp1_input
   - RTC (board level I2C RTC)
   - Ethernet eth0
   - NAND flash MTD UBIFS
@@ -101,6 +144,7 @@ Working:
   - custom Ethernet MAC Address
   - serial number and board revision
   - USB host port
+  - analog inputs /dev/mvf-adc.{0|1} (see http://developer.toradex.com/knowledge-base/adc-(linux)#Colibri_VFxx)
 - Linux user-space
   - graphics (DCU aka parallel RGB)
   - Midori browser
@@ -112,7 +156,6 @@ Not working or not tested:
   - USB storage as host
   - framebuffer support
 - Linux kernel
-  - analog inputs and temperature sensor
   - RTC (Vybrid internal)
   - high speed serial UART1 and UART2
   - PWM LEDs /sys/class/leds/
@@ -127,17 +170,18 @@ Not working or not tested:
   - watchdog
   - IrDA
   - RS-422/485
+  - Colibri VF61: Resistive touch and analog audio
 - Linux user-space
   - GPIO config tool
 
-**************************************
-NAND Boot: Colibri VF50 V1.0a (Sample)
-**************************************
+*************************************************************
+NAND Boot: Colibri VF50 V1.0a and Colibri VF61 V1.0b (Sample)
+*************************************************************
 
 If the boot loader in NAND got corrupted SD card boot as described further down can be used as a means of recovery.
 
 Initial Preparation:
-- download and extract Colibri_VF50_LinuxImageVx.yz.tar.bz2 package with root permissions
+- download and extract Colibri_VF_LinuxImageVx.yz.tar.bz2 package with root permissions
 - use any VFAT formatted SD resp. uSD card with at least 100 MB of free space
 - optionally format the SD resp. uSD card using the format_sd.sh script (warning everything will be erased)
 - run update.sh script with optional -o argument pointing to mount point of above mentioned card
@@ -161,9 +205,9 @@ Boot from NAND:
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
 
-*****************************************
-SD Card Boot: Colibri VF50 V1.0a (Sample)
-*****************************************
+****************************************************************
+SD Card Boot: Colibri VF50 V1.0a and Colibri VF61 V1.0b (Sample)
+****************************************************************
 
 If the boot loader in NAND got corrupted this can also be used as a means of recovery.
 
@@ -172,7 +216,7 @@ Initial Preparation:
   - select SD boot bootstrap option
     - pull the following X8 pins down aka to ground with 1 k ohm resistors: 23 and 33
     - pull the following X8 pins up aka to 3.3 volt with 1 k ohm resistors: 21, 27, 34 and 44
-- download and extract Colibri_VF50_LinuxImageVx.yz.tar.bz2 package with root permissions
+- download and extract Colibri_VF_LinuxImageVx.yz.tar.bz2 package with root permissions
 
 Flash SD Card:
 - use any SD resp. uSD card of at least 100 MB capacity
@@ -185,4 +229,4 @@ Boot from SD Card:
 - apply power or reset
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, October 25, 2013
+Toradex, December 13, 2013
