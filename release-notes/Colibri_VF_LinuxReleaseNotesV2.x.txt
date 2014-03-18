@@ -4,8 +4,36 @@ Release Notes:  Linux Image V2.x for Colibri VF50/VF61
 
 Contents:
 - U-Boot 2011.12 boot loader
-- Linux 3.0.15 kernel, based on Freescale TWR-VF65GS10 Timesys LinuxLink 2013-07-29
+- Linux 3.0.15 kernel, based on Freescale TWR-VF65GS10 Timesys LinuxLink 2014-01-27
 - OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
+
+********************************************************************************
+Linux Image V2.1 Beta 3 (March 18, 2014)
+- U-Boot
+  - Add default VESA VGA vidargs for our now modedb enabled kernel. This allows
+    easy specifying an alternate parallel RGB resolution.
+- Linux kernel:
+  - Allow to configure video resolution through modedb (video=dcufb:..).
+  - Add kernel parameters to change RGB clock polarity.
+  - Included reworked Fusion multi-touch touchscreen driver.
+  - Merged Timesys tag 3.0-vybrid-ts2.13.
+  - Support suspend/resume for Micrel PHY.
+  - Enable FIFO for UART even when serial console is enabled.
+  - Enabled wake-up pins SODIMM 43/45.
+  - Fix and enabled SPI support (DSPI1).
+  - Platform data for CAN transceiver MCP251x on Evaluation Board.
+  - Build AC97 driver as module (supports resistive touch only for now).
+  - Add PWM platform data, export PWM channels as PWM LEDs.
+- Linux user-space
+  - GPIO config tool.
+  - Add Cortex M4 utility mqxboot and communication library libmcc.
+
+- sources git.toradex.com linux/u-boot branches colibri_vf tag Colibri_VF_LinuxImageV2.1Beta3_20140318
+
+Known Issues:
+- If the module does not boot remove all displays connected to HSYNC, VSYNC and reset.
+  (This has been observed on an Evaluation Board V2.1)
+- Analogue audio is not working on the Colibri VF61
 
 ********************************************************************************
 Linux Image V2.1 Beta 2 (November 29, 2013)
@@ -45,7 +73,7 @@ Known Issues:
 - If the module does not boot remove all displays connected to HSYNC, VSYNC and reset.
   (This has been observed on an Evaluation Board V2.1)
 - LVDS aka TFTLCD resolution hard-coded in kernel to VESA VGA resolution.
-- Resistive touch and analog audio are not working on a Colibri VF61
+- Resistive touch and analogue audio are not working on a Colibri VF61
 
 ********************************************************************************
 Linux Image V2.1 Beta 1 (October 22, 2013)
@@ -133,22 +161,31 @@ Working:
 - Linux kernel
   - GPIOlib /sys/class/gpio
   - temperature sensor /sys/class/hwmon/hwmon0/device/temp1_input
-  - RTC (board level I2C RTC)
+  - RTC (Vybrid internal without wakeup support and board level I2C RTC)
   - Ethernet eth0
   - NAND flash MTD UBIFS
   - serial console debug UART0
+  - Serial UART_A/UART_B and UART_C up to 921600, including RTS/CTS
   - I2C via /dev/i2c-X
   - MMC/SD card ESDHC2
-  - resistive touch
+  - PWM LEDs /sys/class/leds/
+  - Colibri VF61: AC97 resistive touch (early version, load module kernel-module-snd-soc-wm9712/kernel-module-mvf-sai-ac97)
+  - SPI via /dev/spidev1.0
   - framebuffer console
   - custom Ethernet MAC Address
   - serial number and board revision
+  - watchdog
   - USB host port
-  - analog inputs /dev/mvf-adc.{0|1} (see http://developer.toradex.com/knowledge-base/adc-(linux)#Colibri_VFxx)
+  - USB raw HID device /dev/hidrawX
+  - analogue inputs /dev/mvf-adc.{0|1} (see http://developer.toradex.com/knowledge-base/adc-(linux)#Colibri_VFxx)
+  - power management (standby is LPRun, suspend-to-mem is Stop mode)
 - Linux user-space
   - graphics (DCU aka parallel RGB)
   - Midori browser
+  - GPIO config tool
   - LXDE
+  - Cortex M4 utility mqxboot
+  - Communication library libmcc
 
 Not working or not tested:
 - U-Boot boot loader
@@ -156,23 +193,15 @@ Not working or not tested:
   - USB storage as host
   - framebuffer support
 - Linux kernel
-  - RTC (Vybrid internal)
-  - high speed serial UART1 and UART2
-  - PWM LEDs /sys/class/leds/
-  - SPI via /dev/spidev0.0
+  - CAN (Vybrid internal)
   - USB audio driver
   - USB webcam
-  - USB raw HID device /dev/hidrawX
   - USB device Ethernet RNDIS
   - automatic USB device/host detection aka OTG support
-  - power management
   - optional parallel camera interface
-  - watchdog
   - IrDA
   - RS-422/485
-  - Colibri VF61: Resistive touch and analog audio
-- Linux user-space
-  - GPIO config tool
+  - Colibri VF61: Aanalogue audio
 
 *************************************************************
 NAND Boot: Colibri VF50 V1.0a and Colibri VF61 V1.0b (Sample)
@@ -229,4 +258,4 @@ Boot from SD Card:
 - apply power or reset
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, December 13, 2013
+Toradex, March 18, 2014

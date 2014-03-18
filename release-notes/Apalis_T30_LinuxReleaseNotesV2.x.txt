@@ -4,12 +4,38 @@ Release Notes:  Linux Image V2.x for Apalis T30
 
 Contents:
 - U-Boot 2011.06 boot loader
-- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r3
+- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release R16.4
 - OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
 
 Licensing:
 - proprietary multimedia codecs included for evaluation purpose only
 - customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.1 Beta 3 (March 18, 2014)
+- U-Boot:
+  - Enable hardware boot partition support (via 'mmc dev [dev] [part]' command).
+  - Get rid of the spurious 'video=tegrafb' kernel boot argument and add
+    'noatime' to the usbargs.
+- Linux kernel:
+  - Initialise high speed UART with lower default baudrate to avoid issues.
+  - Merge with NVIDIA's latest L4T R16.4 kernel.
+  - Fix the disabling of PCIe GEN2 capabilities.
+  - Added OmniVision OV7670 and Texas Instruments TVP5150 V4L2 drivers.
+  - Added initial Aptina AS0260 V4L2 driver.
+  - Solved low framerate issue with analogue cameras.
+- rootfs / oe-core:
+  - nv-binaries: update to L4T R16.4
+  - Added gst-plugins-good-jpeg
+- sources git.toradex.com tag Apalis_T30_LinuxImageV2.1Beta3_20140318
+
+Known Issues:
+- connecting an analogue mic to the on module codec resets the codec, so that 
+    neither headphone out nor mic in works anymore. Workaround: Have mic 
+    connected before boot or change the output source between DAC/LineIn
+- certain low-speed USB devices might not get detected
+- on first boot the resizing process adversely affects system performance for 
+    the first few minutes until completed
 
 ********************************************************************************
 Linux Image V2.1 Beta 2 (February 6, 2014)
@@ -217,7 +243,7 @@ Notes:
 - user account: root with empty password
 - ext3 root file system
 - opkg package manager
-- HDMI: not all pixel clock frequencies allow for HDMI audio
+- HDMI aka DVI-D: not all pixel clock frequencies allow for HDMI audio
 - CRT: the T30 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
 - Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu) and awk (e.g. install gawk on Ubuntu)
 
@@ -227,6 +253,7 @@ Working on latest image:
   - ASIX based USB to Ethernet adapters on USBH3
   - MMC/SD cards (only GPT partitioned)
   - eMMC flash with NVIDIA partition table parsing
+  - RAM size auto detection
   - serial console debug UARTA aka UART1
   - Toradex Apalis configuration block handling
   - USB storage as host on USBH3
@@ -234,7 +261,8 @@ Working on latest image:
   - GPIOlib /sys/class/gpio
   - temperature sensor /sys/bus/i2c/devices/4-004c
   - RTC (Tegra internal, PMIC and board level I2C RTC)
-  - Gigabit Ethernet eth0
+  - Gigabit Ethernet enpXs0, X being its PCIe bus number
+  - eMMC ext3
   - serial console debug UARTA aka UART1
   - high speed serial UARTB aka UART3, UARTC aka UART4 and UARTD aka UART2
   - I2C via /dev/i2c-X
@@ -243,7 +271,7 @@ Working on latest image:
   - PWM LEDs /sys/class/leds/
   - HDMI HDA audio
   - HDA audio (on Eval Board V1.0a: check datasheet/schematics for patch instructions)
-  - analog audio capture, playback and touch
+  - analogue audio capture, playback and resistive touch
     - audio noise is high, workaround is to set headphone volume to maximum and use the DAC volume
     - touch has some jitter
   - SPI via /dev/spidev0.0 aka SPI1 and /dev/spidev4.2 aka SPI2
@@ -267,7 +295,7 @@ Working on latest image:
   - graphics (LVDS-1 aka TFTLCD and HDMI-1 aka DVI-D)
   - tegrastats
   - Firefox
-  - Gstreamer video encode and playback, dual full HD video decode
+  - Gstreamer video encode and playback, independent dual full HD video decode
   - LXDE
   - tegrastats-gtk, CPU information visible in graphical environment
   - LVDS transmitter configuration (see lvds-dual-channel.sh resp. lvds-single-channel.sh)
@@ -285,7 +313,6 @@ Not working or not tested:
   - suspend LP1 (igb/PCIe failing)
 - Linux user-space
   - Adobe Flash not provided by L4T (and probably never will)
-  - opkg package feeds don't seem to be usable
   - GPIO config tool missing Apalis MXM3 pin description integration
 
 *********************************************************
@@ -326,4 +353,4 @@ Boot from eMMC:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, February 13, 2014
+Toradex, March 18, 2014

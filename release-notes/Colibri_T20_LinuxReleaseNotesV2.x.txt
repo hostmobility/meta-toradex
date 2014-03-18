@@ -4,12 +4,36 @@ Release Notes:  Linux Image V2.x for Colibri T20
 
 Contents:
 - U-Boot 2011.06 boot loader
-- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release 16-r3
+- Linux 3.1.10 kernel, based on NVIDIA's Linux for Tegra (L4T) release R16.4
 - OpenEmbedded oe-core 2013.06 based root file system, using LXDE desktop environment
 
 Licensing:
 - proprietary multimedia codecs included for evaluation purpose only
 - customer required to obtain proper re-distribution license
+
+********************************************************************************
+Linux Image V2.1 Beta 3 (March 18, 2014)
+- U-Boot:
+  - Enable hardware boot partition support (via 'mmc dev [dev] [part]' command).
+  - Get rid of the spurious 'video=tegrafb' kernel boot argument, adjust the
+    optional ubiargs and add 'noatime' to the usbargs.
+  - Enable CONFIG_INITRD_TAG which allows passing initrd ATAGs to the Linux
+    kernel required for initial RAM disk support.
+  - Disable PMIC sleep mode on low supply voltage.
+- Linux kernel:
+  - Hack to avoid 24 Hz mode in X resulting in no display at all.
+  - Initialise high speed UART with lower default baudrate to avoid issues.
+  - Merge with NVIDIA's latest L4T R16.4 kernel.
+  - Added OmniVision OV7670 and Texas Instruments TVP5150 V4L2 drivers.
+  - Added initial Aptina AS0260 V4L2 driver.
+  - Solved low framerate issue with analogue cameras.
+- rootfs / oe-core:
+  - nv-binaries: update to L4T R16.4
+- sources git.toradex.com tag Colibri_T20_LinuxImageV2.1Beta3_20140318
+
+Known Issues:
+- LP1 suspend might fail due to pending USB interrupts
+- LP1 suspend might hang due to display controller issue
 
 ********************************************************************************
 Linux Image V2.1 Beta 2 (February 7, 2014)
@@ -167,7 +191,7 @@ Linux Image V2.0 Beta 1 (December 18, 2012)
   - fix Ethernet detection fault
 - Linux kernel:
   - added one wire platform data (conditional, CONFIG_W1_MASTER_TEGRA must be enabled)
-  - implement analog input AD0 aka ANALOG_IN0 as voltage_now and AD1 aka ANALOG_IN1 as temp value (see /sys/class/power_supply/colibri_t20-analog_inputs)
+  - implement analogue input AD0 aka ANALOG_IN0 as voltage_now and AD1 aka ANALOG_IN1 as temp value (see /sys/class/power_supply/colibri_t20-analog_inputs)
   - unified Ethernet initialisation
   - GPIO keys implementation
   - USB OTG support
@@ -212,7 +236,7 @@ Linux Image V2.0 Alpha 2 (October 19, 2012)
   - increase kernel partition size to 8 MB
   - move the init output from the framebuffer console to the serial output
 - Linux kernel:
-  - implement analog input AD0 aka ANALOG_IN0 as voltage_now and AD1 aka ANALOG_IN1 as temp value. See /sys/class/power_supply/colibri_t20-analog_inputs.
+  - implement analogue input AD0 aka ANALOG_IN0 as voltage_now and AD1 aka ANALOG_IN1 as temp value. See /sys/class/power_supply/colibri_t20-analog_inputs.
   - PWM B, PWM C, PWM D now accessible from userspace, /sys/class/leds/
   - IPv6 enabled
   - USB audio enabled
@@ -266,7 +290,7 @@ Notes:
 - YAFFS2 flash root file system
 - opkg package manager
 - HDMI aka DVI-D: not all pixel clock frequencies allow for HDMI audio
-- CRT: The T20 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
+- CRT: the T20 internal video DAC output is unsupported by NVIDIA's L4T Linux SW stack
 - Linux host used for recovery mode flashing requires proper 32-bit execution environment (e.g. install ia32-libs on 64-bit Ubuntu)
 
 Working on latest image:
@@ -292,7 +316,7 @@ Working on latest image:
   - MMC/SD card, optional 8-bit SDHCI
   - PWM LEDs /sys/class/leds/
   - HDMI SPDIF audio
-  - AC97 audio capture, playback and touch
+  - AC97 audio capture, playback and resistive touch
   - SPI via /dev/spidev3.0
   - GMI with multiplexed nPWE and RDnWR
   - framebuffer console
@@ -305,23 +329,26 @@ Working on latest image:
   - USB raw HID device /dev/hidrawX
   - USB device Ethernet RNDIS, provided by Android gadget
   - automatic USB device/host detection aka OTG support
-  - analog input AD0, AD1 /sys/class/power_supply/colibri_t20-analog_inputs 
+  - analogue input AD0, AD1 /sys/class/power_supply/colibri_t20-analog_inputs 
   - suspend LP1
   - DVFS power management
+  - optional parallel camera interface
 - Linux user-space
   - graphics (LVDS-1 aka TFTLCD and HDMI-1 aka DVI-D)
   - tegrastats
   - Firefox
-  - Gstreamer video playback, dual full HD video decode
+  - Gstreamer video encode and playback, independent dual full HD video decode
   - GPIO config tool
   - LXDE
   - tegrastats-gtk, CPU information visible in graphical environment
 
 Not working or not tested:
 - U-Boot USB keyboard
+- Linux kernel
+  - IrDA
+  - RS-422/485
 - Adobe Flash not provided by L4T (and probably never will)
 - opkg package feeds seem to not be usable
-
 
 *****************************************************************************************************************************************************************************************
 NAND Boot: Colibri T20 256MB V1.1b (Sample), Colibri T20 512MB V1.1c (Sample), Colibri T20 256MB V1.2a, Colibri T20 512MB V1.2a, Colibri T20 256MB IT V1.2a or Colibri T20 512MB IT V1.2a
@@ -390,4 +417,4 @@ Boot from SD Card:
 - power cycle
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, February 10, 2014
+Toradex, March 18, 2014
