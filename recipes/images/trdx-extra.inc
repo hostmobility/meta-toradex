@@ -54,6 +54,9 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = " \
     util-linux-fstrim \
     kernel-module-adv7180 \
     kernel-module-max9526 \
+    kernel-module-ov7670soc \
+    kernel-module-tvp5150soc \
+    kernel-module-as0260soc \
     kernel-module-tegra-v4l2-camera \
     kernel-module-videobuf2-dma-nvmap \
     kernel-module-videobuf2-memops \
