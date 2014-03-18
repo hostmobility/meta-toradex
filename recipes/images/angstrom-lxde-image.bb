@@ -81,6 +81,9 @@ GSTREAMER = " \
     gst-plugins-good-wavparse \
     gst-plugins-ugly-asf \
 "
+GSTREAMER_append_tegra3 = " \
+    gst-plugins-good-jpeg \
+"
 GSTREAMER_colibri-vf = ""
 
 IMAGE_INSTALL += " \
