@@ -65,7 +65,14 @@ IMAGE_INSTALL_MACHINE_colibri-vf = " \
     iproute2 \
     canutils \
     mtd-utils-ubifs \
+    mqxboot \
+    libmcc \
     kernel-module-fusion-f0710a \
+    kernel-module-mcc \
+    kernel-module-snd-ac97-codec \
+    kernel-module-snd-soc-mvf \
+    kernel-module-mvf-sai-ac97 \
+    kernel-module-snd-soc-wm9712 \
 "
 
 IMAGE_INSTALL_MACHINE = ""
