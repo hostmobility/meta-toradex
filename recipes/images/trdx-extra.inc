@@ -61,6 +61,7 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = " \
 "
 
 IMAGE_INSTALL_MACHINE_colibri-vf = " \
+    gpioconfig \
     iproute2 \
     canutils \
     mtd-utils-ubifs \
