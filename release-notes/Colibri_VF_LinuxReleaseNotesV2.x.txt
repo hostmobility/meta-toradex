@@ -34,6 +34,8 @@ Known Issues:
 - If the module does not boot remove all displays connected to HSYNC, VSYNC and reset.
   (This has been observed on an Evaluation Board V2.1)
 - Analogue audio is not working on the Colibri VF61
+- An input on UART_A during bootup can lead to a hang (stuck at "rtc-ds1307 0-0068: hctosys: unable to
+  read the hardware clock"). Make sure UART_A is connected before powering up and not written to.
 
 ********************************************************************************
 Linux Image V2.1 Beta 2 (November 29, 2013)
@@ -258,4 +260,4 @@ Boot from SD Card:
 - apply power or reset
 - upon first boot post-install scripts are run which takes around 2 minutes, please be patient
 
-Toradex, March 18, 2014
+Toradex, March 20, 2014
