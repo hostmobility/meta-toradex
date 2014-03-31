@@ -15,9 +15,13 @@ do_rootfs_prepend() {
 }
 
 #we need the native ubi tools for machines using ubifs
-DEPENDS_colibri-vf = "mtd-utils-native"
-CP_MKUBIFS=""
-CP_MKUBIFS_colibri-vf="MKUBIFS=`which mkfs.ubifs` ; mkdir ${IMAGE_ROOTFS}/../vf_flash/ ; cp ${MKUBIFS} ${IMAGE_ROOTFS}/../vf_flash/ ; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/mkfs.ubifs"
+DEPENDS_colibri-vf = "mtd-utils-native imx-loader-native"
+CP_TOOLS=""
+CP_TOOLS_colibri-vf= \
+"mkdir -p ${IMAGE_ROOTFS}/../vf_flash; \
+ MKUBIFS=`which mkfs.ubifs`; cp ${MKUBIFS} ${IMAGE_ROOTFS}/../vf_flash/; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/mkfs.ubifs; \
+ IMXLOADER=`which imx_uart`; cp ${IMXLOADER} ${IMAGE_ROOTFS}/../vf_flash/; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/imx_uart; \
+ IMXCONF=`dirname ${IMXLOADER}`; cp ${IMXCONF}/../../etc/imx-loader.d/*.conf ${IMAGE_ROOTFS}/../vf_flash/ "
 
 do_rootfs_append() {
     # put u-boot, kernel into the bin directories, remove the kernel from the rootfs/boot
@@ -33,8 +37,8 @@ do_rootfs_append() {
     echo "${IMAGE_NAME}${PV}_${DATE}" >> ${IMAGE_ROOTFS}/etc/issue
     echo "" >> ${IMAGE_ROOTFS}/etc/issue
 
-    # add the mkfs.ubifs binary if needed
-    ${CP_MKUBIFS}
+    # add tools binaries if needed
+    ${CP_TOOLS}
 
     # remove intermediate file rootfs.lock
     rm ${WORKDIR}/${IMAGE_NAME}${PV}/rootfs.lock
