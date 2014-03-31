@@ -47,6 +47,7 @@ IMAGE_INSTALL_MACHINE_colibri-t30 = " \
 IMAGE_INSTALL_MACHINE_apalis-t30 = " \
     ${IMAGE_INSTALL_T20_T30} \
     pciutils \
+    ptpd \
     iproute2 \
     canutils \
     lvds-ctrl \
@@ -65,6 +66,7 @@ IMAGE_INSTALL_MACHINE_apalis-t30 = " \
 
 IMAGE_INSTALL_MACHINE_colibri-vf = " \
     gpioconfig \
+    ptpd \
     iproute2 \
     canutils \
     mtd-utils-ubifs \
