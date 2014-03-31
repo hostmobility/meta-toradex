@@ -19,5 +19,5 @@ PR = "r1"
 BBCLASSEXTEND = "native"
 
 do_install () {
-    oe_runmake install
+    oe_runmake DESTDIR=${D} install
 }
