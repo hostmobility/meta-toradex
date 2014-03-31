@@ -14,14 +14,23 @@ do_rootfs_prepend() {
     cp -pPr ${S}/* ${IMAGE_ROOTFS}/../ 
 }
 
-#we need the native ubi tools for machines using ubifs
+#we need some native tools for deployment
 DEPENDS_colibri-vf = "mtd-utils-native imx-loader-native"
-CP_TOOLS=""
-CP_TOOLS_colibri-vf= \
-"mkdir -p ${IMAGE_ROOTFS}/../vf_flash; \
- MKUBIFS=`which mkfs.ubifs`; cp ${MKUBIFS} ${IMAGE_ROOTFS}/../vf_flash/; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/mkfs.ubifs; \
- IMXLOADER=`which imx_uart`; cp ${IMXLOADER} ${IMAGE_ROOTFS}/../vf_flash/; ${BUILD_STRIP} ${IMAGE_ROOTFS}/../vf_flash/imx_uart; \
- IMXCONF=`dirname ${IMXLOADER}`; cp ${IMXCONF}/../../etc/imx-loader.d/*.conf ${IMAGE_ROOTFS}/../vf_flash/ "
+
+do_rootfs_append_colibri-vf() {
+    IMAGE_ROOT="${IMAGE_ROOTFS}/../vf_flash/"
+    rm -f ${IMAGE_ROOT}/mkfs.ubifs  ${IMAGE_ROOT}/imx_uart
+    mkdir -p ${IMAGE_ROOT}
+
+    # add the mkfs.ubifs binary
+    cp ${STAGING_DIR_NATIVE}/usr/sbin/mkfs.ubifs ${IMAGE_ROOT}/
+    ${BUILD_STRIP} ${IMAGE_ROOT}/mkfs.ubifs
+
+    # add imx-loader and its configuration files
+    cp ${STAGING_BINDIR_NATIVE}/imx_uart ${IMAGE_ROOT}/
+    ${BUILD_STRIP} ${IMAGE_ROOT}/imx_uart*
+    cp ${STAGING_ETCDIR_NATIVE}/imx-loader.d/* ${IMAGE_ROOT}/
+}
 
 do_rootfs_append() {
     # put u-boot, kernel into the bin directories, remove the kernel from the rootfs/boot
@@ -36,9 +45,6 @@ do_rootfs_append() {
     # add the rootfs version to the welcome banner
     echo "${IMAGE_NAME}${PV}_${DATE}" >> ${IMAGE_ROOTFS}/etc/issue
     echo "" >> ${IMAGE_ROOTFS}/etc/issue
-
-    # add tools binaries if needed
-    ${CP_TOOLS}
 
     # remove intermediate file rootfs.lock
     rm ${WORKDIR}/${IMAGE_NAME}${PV}/rootfs.lock
