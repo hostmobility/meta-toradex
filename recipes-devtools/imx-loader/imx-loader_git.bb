@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 DEPENDS = "libusb1-native"
 
-SRCREV = "5d1d28fc99c33766eea8e8735ed7b912c54eab1e"
+SRCREV = "fd7be57412dfa175646888ea681a2625003f03a6"
 SRC_URI = "git://github.com/toradex/imx_loader.git;protocol=git;branch=uart_loader"
 
 S = "${WORKDIR}/git/"
