@@ -10,3 +10,5 @@ do_configure_append_colibri-vf () {
     rm  ${S}/data/in/icudt50l.dat
     cp ${WORKDIR}/icudt50l.dat ${S}/data/in/
 }
+
+PACKAGE_ARCH_colibri-vf = "${MACHINE_ARCH}"
