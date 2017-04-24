@@ -35,8 +35,8 @@ SRC_URI_tegra3 =  " \
     ${SRC_COMMON} \
 "
 
-SRC_URI[openmax-h.md5sum] = "f8ac8d7272abdbe1980eeac8d03338e8"
-SRC_URI[openmax-h.sha256sum] = "9e8aee85f37946202ff15a52836233f983e90a751c0816ba341ba0c1ffedf99e"
+SRC_URI[openmax-h.md5sum] = "402a7600397c341895cfecbbe1f4e028"
+SRC_URI[openmax-h.sha256sum] = "e7159c88185df60a0dbb28583815067c31285a1f1d4652f6752a7329ccb534d1"
 #    https://www.khronos.org/registry/omxil/api/1.2.0/OpenMAX_IL_1_2.0_Header.zip;name=openmax-h;unpack=no \
 #SRC_URI[openmax-h.md5sum] = "a328b82e29d1e2abc1f20f070b9041a9"
 #SRC_URI[openmax-h.sha256sum] = "9a121921450497e5373abcda000daf52af2ee31097d59c0d299a522b66936fa7"
